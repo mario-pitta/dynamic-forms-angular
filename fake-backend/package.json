@@ -1,5 +1,5 @@
 {
-    "name": "fake-beckend",
+    "name": "fake-backend",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -8,10 +8,9 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
-    "author": "",
+    "author": "Mario Pitta @mj_pitta",
     "license": "ISC",
     "dependencies": {
-        "axios": "^0.26.0",
         "body-parser": "^1.19.2",
         "cors": "^2.8.5",
         "nodemon": "^2.0.15",
