@@ -1,0 +1,82 @@
+<div class="modal-header">
+    <h3>
+        Questão
+    </h3>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <form [formGroup]="form">
+            <div class="col-md-12">
+                <label class="form-label"><strong>Descrição</strong></label>
+                <input type="text" class="form-control" formControlName="key">
+            </div>
+
+            <div class="col-md-12">
+                <label for="" class="form-label"><strong>Tipo de Entrada : </strong></label>
+                <select #selectTypeKey class="form-select" [(ngModel)]="type.key" [ngModelOptions]="{standalone: true}" (change)="log(this.f)">
+                        <option value="texto" selected>Texto</option>
+                        <option value="email">Email</option>
+                        <option value="numero">Número</option>
+                        <option value="documento">Documento</option>
+                        <option value="arquivo">Arquivo</option>
+                        <option value="multipla escolha">Multipla Escolha</option>
+                    </select>
+            </div>
+            <div class="col-md-12">
+                <div *ngIf="type.key === 'multipla escolha'">
+                    <label for="" class="form-label"><strong>Quantas Opções :</strong> </label>
+                    <div class="col-md-6">
+                        <input type="radio" name="choce_options" id="choce_options1" class="form-check-input">
+                        <label for="choce_options1" class="form-label" [(ngModel)]="type.option" [ngModelOptions]="{standalone: true}" value="single">Seleção Única</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="radio" name="choce_options" id="choce_options2" class="form-check-input">
+                        <label for="choce_options2" class="form-label" [(ngModel)]="type.option" [ngModelOptions]="{standalone: true}" value="multiple">Seleção Múltipla</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="type.key === 'documento'">
+                <label class="form-label">Tipo de Documento:</label>
+                <select class="form-select" [(ngModel)]="type.option" [ngModelOptions]="{standalone: true}" (change)="log(this.f)">
+                    <option value="CPF" selected>CPF</option>
+                    <option value="CNPJ">CNPJ</option>
+                    <option value="RG">RG</option>
+                    <option value="multipla escolha">Multipla Escolha</option>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">Grupo da Pergunta:</label>
+                <select class="form-select" formControlName="panelGroup" (change)="log(this.f)">
+                    <option value="usuario" selected>Dados de Usuário</option>
+                    <option value="endereco">Endereço</option>
+                    <option value="contato">Contato</option>
+                    <option value="licenca">Dados da Licença</option>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <input type="checkbox" formControlName="required" id="check_required" class="form-check-input">
+                    <label for="check_required" class="form-label">Obrigatório</label>
+                </div>
+            </div>
+            <!-- <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="check_required" class="form-label">Grupo da Pergunta:</label>
+                    <select class="form-select" formControlName="panelGroup" (change)="log(this.f)">
+                        <option value="" selected>Dados de Usuário</option>
+                        <option value="">Endereço</option>
+                        <option value="">Contato</option>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div> -->
+
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <button class="btn btn-secondary" (click)="modal.hide()">Cancelar</button>
+        <button class="btn btn-success" (click)="confirm()">Salvar</button>
+    </div>
+</div>

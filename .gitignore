@@ -1,0 +1,9 @@
+#Arquivos ignorados no DBServer
+/DBServer/node_modules
+/DBServer/package-lock.json
+
+#Dynamic Forms
+/dynamic-forms/node_modules
+
+#fakebackend
+/fake-backend/node_modules

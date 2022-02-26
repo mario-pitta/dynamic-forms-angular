@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h3>Formulario</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="form">
+                <div class="col-12">
+
+                    <label class="form-label"><strong>Descrição</strong></label>
+                    <input type="text" formControlName="descricao" class="form-control">
+                </div>
+                <div class="col-3">
+
+                    <label class="form-label"><strong>Cidade</strong></label>
+                    <select formControlName="cidade" class="form-select">
+                        <option value="salvador">Salvador</option>
+                        <option value="pojuca">Pojuca</option>
+                        <option value="feira de santana">Feira de Santana</option>
+                        <option value="guarajuba">Guarajuba</option>
+                    </select>
+                </div>
+                <br>
+                <div class="col-md-12">
+
+                    <label class="form-label"><strong>Questões</strong></label>
+                    <table class="table table-hover">
+                        <thead>
+                            <th>Id</th>
+                            <th>Descrição</th>
+                            <th>Exibe</th>
+                            <th>Obrigatório</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let q of questions">
+                                <td>{{q.id}}</td>
+                                <td>{{q.key}}</td>
+                                <td class="text-center">
+                                    <input (change)="checkQuestions()" #checkShowQuestion type="checkbox" [id]="'ckechShow_'+ q.id" class="form-check-input" [(ngModel)]="q.show" [ngModelOptions]="{standalone: true}" />
+                                </td>
+                                <td class="text-center">
+                                    <input (change)="checkQuestions()" #checkRequiredQuestion type="checkbox" [id]="'ckechRequired_'+ q.id" class="form-check-input" [checked]="q.required" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <button class="btn btn-secondary" (click)="modal.hide()">Cancelar</button>
+        <button class="btn btn-success" (click)="confirm()" [disabled]="!f.valid">Salvar</button>
+    </div>
+</div>

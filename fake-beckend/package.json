@@ -1,0 +1,23 @@
+{
+    "name": "fake-beckend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.js --watch",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.26.0",
+        "body-parser": "^1.19.2",
+        "cors": "^2.8.5",
+        "nodemon": "^2.0.15",
+        "request": "^2.88.2"
+    },
+    "devDependencies": {
+        "express": "^4.17.3"
+    }
+}

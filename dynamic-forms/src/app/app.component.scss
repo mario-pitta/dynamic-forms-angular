@@ -1,0 +1,11 @@
+@import "~bootstrap/scss/bootstrap";
+.nav-item {
+    color: #fff;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    color: rgb(29, 27, 126);
+    background-color: #fff;
+    cursor: pointer;
+}

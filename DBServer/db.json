@@ -1,0 +1,168 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "key": "RG",
+      "type": {
+        "key": "documento",
+        "option": "RG"
+      },
+      "required": true,
+      "panelGroup": "usuario"
+    },
+    {
+      "id": 2,
+      "key": "CPF",
+      "type": {
+        "key": "documento",
+        "option": "CPF"
+      },
+      "required": true,
+      "panelGroup": "usuario"
+    },
+    {
+      "id": 3,
+      "key": "Nome",
+      "type": {
+        "key": "texto",
+        "option": null
+      },
+      "required": false,
+      "panelGroup": "usuario"
+    },
+    {
+      "id": 4,
+      "key": "Telefone",
+      "type": {
+        "key": "texto",
+        "option": null
+      },
+      "required": false,
+      "panelGroup": "contato"
+    },
+    {
+      "id": 5,
+      "key": "Email",
+      "type": {
+        "key": "email",
+        "option": null
+      },
+      "required": true,
+      "panelGroup": "contato"
+    },
+    {
+      "id": 6,
+      "key": "CEP",
+      "type": {
+        "key": "texto",
+        "option": null
+      },
+      "required": true,
+      "panelGroup": "endereco"
+    },
+    {
+      "id": 7,
+      "key": "Estado",
+      "type": {
+        "key": "texto",
+        "option": null
+      },
+      "required": true,
+      "panelGroup": "endereco"
+    },
+    {
+      "id": 8,
+      "key": "Cidade",
+      "type": {
+        "key": "texto",
+        "option": null
+      },
+      "required": true,
+      "panelGroup": "endereco"
+    },
+    {
+      "id": 9,
+      "key": "Rua",
+      "type": {
+        "key": "texto",
+        "option": null
+      },
+      "required": true,
+      "panelGroup": "endereco"
+    },
+    {
+      "id": 10,
+      "key": "Complemento",
+      "type": {
+        "key": "texto",
+        "option": null
+      },
+      "required": false,
+      "panelGroup": "endereco"
+    }
+  ],
+  "formularios": [
+    {
+      "id": 1,
+      "descricao": "Cadastro",
+      "cidade": "salvador",
+      "questions": [
+        {
+          "id": 1,
+          "required": true
+        },
+        {
+          "id": 2,
+          "required": true
+        },
+        {
+          "id": 3,
+          "required": false
+        },
+        {
+          "id": 5,
+          "required": true
+        },
+        {
+          "id": 6,
+          "required": true
+        },
+        {
+          "id": 7,
+          "required": true
+        },
+        {
+          "id": 8,
+          "required": true
+        },
+        {
+          "id": 9,
+          "required": true
+        },
+        {
+          "id": 10,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "descricao": "Cadastro",
+      "cidade": "pojuca",
+      "questions": [
+        {
+          "id": 2,
+          "required": true
+        },
+        {
+          "id": 3,
+          "required": false
+        },
+        {
+          "id": 5,
+          "required": true
+        }
+      ]
+    }
+  ]
+}

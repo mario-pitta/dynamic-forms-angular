@@ -1,0 +1,45 @@
+<h3>Lista de Questões</h3>
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="input-group">
+            <input type="text" placeholder="Digite para pesquisar..." class="form-control" (keyup)="search()" [(ngModel)]="inputText">
+            <button class="btn btn-success btn-sm"><span class="material-icons">
+                    search
+                </span></button>
+
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary" (click)="openQuestionFormModal()">Criar Questão</button>
+    </div>
+</div>
+
+<br>
+
+<table class="table table-hover">
+    <thead>
+        <th>ID</th>
+        <th>Descricao</th>
+        <th>Tipo</th>
+        <th>Grupo</th>
+        <th>Ações</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let questao of searchData">
+            <td>{{questao.id}}</td>
+            <td>{{questao.key}}</td>
+            <td>{{questao.type.key}}</td>
+            <td>{{(questao.panelGroup)}}</td>
+
+            <td>
+                <button class="btn btn-warning" (click)="openQuestionFormModal(questao)"><span class="material-icons">
+                    edit
+                    </span></button>
+                <button class="btn btn-danger" (click)="deleteQuestion(questao)"><span class="material-icons">
+                    delete
+                    </span></button>
+            </td>
+        </tr>
+    </tbody>
+</table>

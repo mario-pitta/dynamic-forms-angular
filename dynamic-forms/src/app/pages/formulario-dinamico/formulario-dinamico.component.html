@@ -1,0 +1,12 @@
+<h3>Lista de Formularios</h3>
+
+<form *ngIf="form" [formGroup]="form">
+    <div class="row">
+        <div class="col-md-12" *ngFor="let quest of questions">
+            <label for="">{{quest.key.toUpperCase()}}</label>
+            <div [ngSwitch]="quest.type.key">
+                <input class="form-control" [type]="(quest.type.key === ('texto'  || 'documento' || 'telefone')) ? 'text' : 'date'">
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<h3>Lista de Formularios</h3>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="input-group">
+            <input type="text" placeholder="Digite para pesquisar..." class="form-control">
+            <button class="btn btn-success btn-sm"><span class="material-icons">
+                search
+            </span></button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary" (click)="openFormModal()">Criar Formulario</button>
+    </div>
+</div>
+
+<br>
+<table class="table table-hover">
+    <thead>
+        <th class="col-md-1">ID</th>
+        <th class="col-md-5">Descricao</th>
+        <th class="col-md-3">Cidade</th>
+        <th class="col-md-3">Ações</th>
+        <!-- <th>Grupo</th> -->
+    </thead>
+    <tbody>
+        <tr *ngFor="let form of searchData">
+            <td>{{form.id}}</td>
+            <td>{{form.descricao}}</td>
+            <td>{{form.cidade}}</td>
+            <!-- <td>{{form}}</td> -->
+
+            <td>
+                <button class="btn" [routerLink]="['../formulario_dinamico', form.id]"><span class="material-icons">
+                    description
+                    </span></button>
+                <button class="btn" (click)="openFormModal(form)"><span class="material-icons">
+                    edit
+                    </span></button>
+                <button class="btn btn-danger" (click)="deleteForm(form)"><span class="material-icons">
+                    delete
+                    </span></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
