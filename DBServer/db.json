@@ -1,16 +1,6 @@
 {
   "questions": [
     {
-      "id": 1,
-      "key": "RG",
-      "type": {
-        "key": "documento",
-        "option": "RG"
-      },
-      "required": true,
-      "panelGroup": "usuario"
-    },
-    {
       "id": 2,
       "key": "CPF",
       "type": {
@@ -99,18 +89,24 @@
       },
       "required": false,
       "panelGroup": "endereco"
+    },
+    {
+      "id": 11,
+      "key": "teste multipla escolha",
+      "type": {
+        "key": "multipla escolha",
+        "option": null
+      },
+      "required": true,
+      "panelGroup": "licenca"
     }
   ],
   "formularios": [
     {
-      "id": 1,
+      "id": 2,
       "descricao": "Cadastro",
-      "cidade": "salvador",
+      "cidade": "pojuca",
       "questions": [
-        {
-          "id": 1,
-          "required": true
-        },
         {
           "id": 2,
           "required": true
@@ -118,6 +114,25 @@
         {
           "id": 3,
           "required": false
+        },
+        {
+          "id": 5,
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "descricao": "Cadastro de Ambulante",
+      "cidade": "salvador",
+      "questions": [
+        {
+          "id": 2,
+          "required": true
+        },
+        {
+          "id": 3,
+          "required": true
         },
         {
           "id": 5,
@@ -142,24 +157,9 @@
         {
           "id": 10,
           "required": false
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "descricao": "Cadastro",
-      "cidade": "pojuca",
-      "questions": [
-        {
-          "id": 2,
-          "required": true
         },
         {
-          "id": 3,
-          "required": false
-        },
-        {
-          "id": 5,
+          "id": 11,
           "required": true
         }
       ]

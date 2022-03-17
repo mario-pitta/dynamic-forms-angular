@@ -118,7 +118,8 @@ app.put('/formularios/:id', (req, res) => {
 
 app.delete('/formularios/:id', (req, res) => {
     console.log('entrou no delete')
-    id = req.query.id
+    id = req.path.split('/')[req.path.split('/').length - 1]
+    console.log(id)
     dbReq = new request(
         `${urlDBJson}formularios/${id}`, { method: 'DELETE' },
         (error, response, body) => {

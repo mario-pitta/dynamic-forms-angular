@@ -32,6 +32,7 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
       type: {
         key: ['', Validators.required],
         option: ['', Validators.nullValidator],
+        values: ['', Validators.nullValidator]
       },
       required: [false, Validators.nullValidator],
       panelGroup: ['', Validators.required]
@@ -39,7 +40,6 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    console.log(this.questao)
     if (this.questao) {
       this.form.patchValue({
         id: this.questao.id,
@@ -56,7 +56,7 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
     }
   }
 
-  log(value: any) {
+  setFormType(value: any) {
     this.form.patchValue({
       type: {
         key: this.type.key,

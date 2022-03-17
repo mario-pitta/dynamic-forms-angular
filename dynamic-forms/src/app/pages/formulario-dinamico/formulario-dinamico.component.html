@@ -3,10 +3,41 @@
 <form *ngIf="form" [formGroup]="form">
     <div class="row">
         <div class="col-md-12" *ngFor="let quest of questions">
-            <label for="">{{quest.key.toUpperCase()}}</label>
-            <div [ngSwitch]="quest.type.key">
-                <input class="form-control" [type]="(quest.type.key === ('texto'  || 'documento' || 'telefone')) ? 'text' : 'date'">
+            <label for="">{{quest.key.toUpperCase()}} </label><span *ngIf="quest.required" class="text-danger">*</span>
+            <div [ngSwitch]="quest.type.key" [ngClass]="(f.get(quest.key).touched && !f.get(quest.key).valid) ? 'danger': ''">
+
+                <div *ngSwitchCase="'texto'">
+                    <input class="form-control" [formControlName]="quest.key" type="text">
+                </div>
+                <div *ngSwitchCase="'multipla escolha'">
+                    <select name="" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                    </select>
+                </div>
+                <div *ngSwitchCase="'numero'">
+                    <input class="form-control" type="number">
+                </div>
+                <div *ngSwitchCase="'documento'">
+                    <div [ngSwitch]="quest.type.option">
+                        <div *ngSwitchCase="'RG'">
+                            <input class="form-control" type="text" placeholder="00.000.000-00">
+
+                        </div>
+                        <div *ngSwitchCase="'CPF'">
+                            <input class="form-control" type="text" placeholder="000.000.000-00">
+                        </div>
+                        <div *ngSwitchCase="'CNPJ'">
+                            <input class="form-control" type="text" placeholder="00.000.000/0000-00">
+                        </div>
+                    </div>
+                </div>
+
+                <span class="text-danger  text-sm" *ngIf="f.get(quest.key).touched && !f.get(quest.key).valid">Esse campo não está valido.</span>
             </div>
+
         </div>
     </div>
 </form>

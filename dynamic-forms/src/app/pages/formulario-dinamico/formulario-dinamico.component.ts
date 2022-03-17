@@ -16,14 +16,19 @@ export class FormularioDinamicoComponent implements OnInit {
   questions : Questao[] = []
   form: FormGroup
   formulario: Formulario
+
+  rgMask = '00.000.000-00'
+
   constructor(private fb : FormBuilder, private route: ActivatedRoute, private formService: FormulariosService, private questionService : QuestionService) { }
 
   async ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
-    await this.getForm(this.id)
-    setTimeout(() => {
-      this.gerarForm(this.formulario, this.questions)
-    }, 800)
+    await this.getForm(this.id).then(() => {
+      setTimeout(() => {
+        this.gerarForm(this.formulario, this.questions)
+      }, 1000)
+
+    })
   }
 
 
@@ -45,6 +50,7 @@ export class FormularioDinamicoComponent implements OnInit {
   gerarForm(data: any, questions : Questao[]){  
     let group : any = {}
     questions.forEach(quest => {
+      console.log(quest.key)
       group[quest.key] = new FormControl('', [(quest.required) ? Validators.required : Validators.nullValidator])
     })
 
@@ -54,4 +60,9 @@ export class FormularioDinamicoComponent implements OnInit {
     console.log(this.form)
   }
 
+
+
+  public get f () {
+    return this.form
+  }
 }
