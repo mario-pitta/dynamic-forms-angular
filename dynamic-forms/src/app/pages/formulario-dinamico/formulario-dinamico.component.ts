@@ -23,9 +23,9 @@ export class FormularioDinamicoComponent implements OnInit {
 
   async ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
-    await this.getForm(this.id).then(() => {
+    await this.getFormulario(this.id).then(() => {
       setTimeout(() => {
-        this.gerarForm(this.formulario, this.questions)
+        this.gerarFormGroup(this.formulario, this.questions)
       }, 1000)
 
     })
@@ -34,11 +34,12 @@ export class FormularioDinamicoComponent implements OnInit {
 
 
 
-  async getForm(id: number) {    
+  async getFormulario(id: number) {    
      this.formService.getFormById(id).subscribe((data: Formulario) => {
       this.formulario = data
       this.formulario.questions.forEach(async (q: any) => {
         await this.questionService.getQuestionById(q.id).subscribe(async (questao: Questao) => {
+          questao.required = q.required
           this.questions.push(questao);
           
         });
@@ -47,11 +48,16 @@ export class FormularioDinamicoComponent implements OnInit {
     })
   }
 
-  gerarForm(data: any, questions : Questao[]){  
+  gerarFormGroup(data: any, questions : Questao[]){  
     let group : any = {}
     questions.forEach(quest => {
       console.log(quest.key)
-      group[quest.key] = new FormControl('', [(quest.required) ? Validators.required : Validators.nullValidator])
+      group[quest.key] = new FormControl('', [
+        //Acrescentar validadores conforme as opções das questões
+        (quest.required) ? Validators.required : Validators.nullValidator, 
+        (quest.type.key == 'email') ? Validators.email : Validators.nullValidator
+      
+      ])
     })
 
     this.form =  new FormGroup(group)

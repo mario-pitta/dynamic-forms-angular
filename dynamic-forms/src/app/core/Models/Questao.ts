@@ -2,15 +2,13 @@ export interface Questao {
     id?: number
     key: string, 
     show?: boolean,
+    required: boolean
     type: { 
         key: string | 'texto' | 'email' | 'password' | 'numero' | 'select' | 'document'; 
         option?: {
-            key: null | string 
-            value: string | boolean | number 
+            key: null | string  // EX: 'mask' 
+            value: string | boolean | number // EX: 'TELEFONE'| "CPF"| "EMAIL" | "CNPJ"
         } []
-    }
-    mask?: null | 'TELEFONE'| "CPF"| "EMAIL" | "CNPJ"
-    required: boolean
-    controlType?: string
+    }    
     panelGroup?: string
 }

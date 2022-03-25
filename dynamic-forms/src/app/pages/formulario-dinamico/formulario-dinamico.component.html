@@ -1,16 +1,16 @@
-<h3>Lista de Formularios</h3>
+<h3>Formulario dinamico!! </h3>
 
 <form *ngIf="form" [formGroup]="form">
     <div class="row">
         <div class="col-md-12" *ngFor="let quest of questions">
-            <label for="">{{quest.key.toUpperCase()}} </label><span *ngIf="quest.required" class="text-danger">*</span>
+            <label for="">{{quest.key.toUpperCase()}} </label><span *ngIf="quest.required" class="text-danger"> *</span>
             <div [ngSwitch]="quest.type.key" [ngClass]="(f.get(quest.key).touched && !f.get(quest.key).valid) ? 'danger': ''">
 
                 <div *ngSwitchCase="'texto'">
                     <input class="form-control" [formControlName]="quest.key" type="text">
                 </div>
                 <div *ngSwitchCase="'multipla escolha'">
-                    <select name="" id="">
+                    <select [formControlName]="quest.key" id="">
                         <option value="">1</option>
                         <option value="">2</option>
                         <option value="">3</option>
@@ -18,23 +18,28 @@
                     </select>
                 </div>
                 <div *ngSwitchCase="'numero'">
-                    <input class="form-control" type="number">
+                    <input class="form-control" [formControlName]="quest.key" type="number">
                 </div>
                 <div *ngSwitchCase="'documento'">
                     <div [ngSwitch]="quest.type.option">
                         <div *ngSwitchCase="'RG'">
-                            <input class="form-control" type="text" placeholder="00.000.000-00">
-
+                            <input [formControlName]="quest.key" class="form-control" type="text" placeholder="00.000.000-00">
                         </div>
                         <div *ngSwitchCase="'CPF'">
-                            <input class="form-control" type="text" placeholder="000.000.000-00">
+                            <input [formControlName]="quest.key" class="form-control" type="text" placeholder="000.000.000-00">
                         </div>
                         <div *ngSwitchCase="'CNPJ'">
-                            <input class="form-control" type="text" placeholder="00.000.000/0000-00">
+                            <input [formControlName]="quest.key" class="form-control" type="text" placeholder="00.000.000/0000-00">
                         </div>
                     </div>
                 </div>
+                <div *ngSwitchCase="'email'">
+                    <input [formControlName]="quest.key" class="form-control" type="email" [required]="quest.required" />
+                </div>
+                <div *ngSwitchCase="'arquivo'">
+                    <input [formControlName]="quest.key" class="form-input-control" type="file" accept="*" multiple [required]="quest.required" />
 
+                </div>
                 <span class="text-danger  text-sm" *ngIf="f.get(quest.key).touched && !f.get(quest.key).valid">Esse campo não está valido.</span>
             </div>
 
