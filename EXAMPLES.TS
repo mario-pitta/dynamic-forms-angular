@@ -1,16 +1,17 @@
 export interface Questao {
-    id?: number
-    key: string,
-    show?: boolean,
-    required: boolean
+    id?: number;
+    key: string;
+    show?: boolean;
+    required: boolean;
+    panelGroup?: string;
     type: {
         key: string | 'text' | 'email' | 'password' | 'number' | 'select' | 'document';
         option?: {
             key: null | string  // EX: 'mask' 
             value: string | boolean | number // EX: 'TELEFONE'| "CPF"| "EMAIL" | "CNPJ"
+            tipo: string
         }[]
     }
-    panelGroup?: string
 }
 
 
@@ -78,8 +79,12 @@ var questao3 = {
         options: [
             {
                 property: "accept",
-                value: ".pdf, .doc, .docx, .csv, .csvx, .xls, .xlsx, .odf",
+                value: ".pdf, .doc, .docx",
                 descricao: "Documento"
+            }, {
+                property: "accept",
+                value: ".csv, .csvx, .xls, .xlsx, .odf",
+                descricao: "Planilha"
             }, {
                 property: "accept",
                 value: ".png, .jpeg, .jpg",
@@ -153,3 +158,51 @@ var questao5 = {
 var questao6 = {
 
 }
+
+
+
+
+
+
+/** FLUXO DE PROCESSO */
+let processo = {
+    id: 1,
+    fluxo: {
+        id: 40,
+        estagio: 1,
+        ordem: 1,
+        descricao: "abs",
+        centroDeInformacao: "SEDUR",
+        subestagios: [{
+            estagio: 1,
+            descricao: "abs",
+            parent_estagio_id: 40,
+            ordem: 1,
+            centroDeInformacao: "SEDUR/CAT"
+        }, 
+        {
+            estagio: 1,
+            ordem: 2,
+            descricao: "abs",
+            parent_estagio_id: 40,
+            centroDeInformacao: "SEDUR/PQP"
+        },
+        {
+            estagio: 1,
+            ordem: 3,
+            descricao: "abs",
+            parent_estagio_id: 40,
+            centroDeInformacao: "SEDUR/ABC"
+        }]
+    }
+}
+
+
+// SELECT *, 
+// (SELECT * FROM PROCESSO_FLUXO_ESTAGIO F 
+//      INNER JOIN ESTAGIO E ON E.ID = F.ESTAGIO_ID 
+//     WHERE F.ID = F.PARENT_ESTAGIO_FLUXO_ID AND F.FL_SUBESTAGIO > 0) 
+// FROM PROCESSO P 
+//     INNER JOIN PROCESSO_FLUXO_ESTAGIO F ON F.PROCESSO_ID = P.ID
+//     INNER JOIN ESTAGIO E ON E.ID = F.ESTAGIO_ID
+// WHERE P.ID = 1 AND F.FL_SUBESTAGIO <> 1

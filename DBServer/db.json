@@ -1,142 +1,109 @@
 {
   "questions": [
     {
-      "id": 2,
-      "key": "CPF",
-      "type": {
-        "key": "documento",
-        "option": "CPF"
-      },
+      "id": 1,
+      "name": "CPF",
       "required": true,
-      "panelGroup": "usuario"
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "text",
+        "options": [
+          {
+            "property": "mask",
+            "value": "000.000.000-00",
+            "descricao": "CPF"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "RG",
+      "required": true,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "text",
+        "options": [
+          {
+            "property": "mask",
+            "value": "00.000.000-00",
+            "descricao": "RG"
+          }
+        ]
+      }
     },
     {
       "id": 3,
-      "key": "Nome",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
+      "name": "Multipla Escolha",
       "required": false,
-      "panelGroup": "usuario"
+      "panelGroup": "empresa",
+      "detalhamento": null,
+      "type": {
+        "key": "select",
+        "options": [
+          {
+            "value": "Jhonatan",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "Gabriel",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "Willian",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "property": "multiple",
+            "value": false,
+            "descricao": "Multiplas escolhas"
+          }
+        ]
+      }
     },
     {
       "id": 4,
-      "key": "Telefone",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
+      "name": "Arquivo ",
       "required": false,
-      "panelGroup": "contato"
-    },
-    {
-      "id": 5,
-      "key": "Email",
+      "panelGroup": "archive",
+      "detalhamento": null,
       "type": {
-        "key": "email",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "contato"
-    },
-    {
-      "id": 6,
-      "key": "CEP",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "endereco"
-    },
-    {
-      "id": 7,
-      "key": "Estado",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "endereco"
-    },
-    {
-      "id": 8,
-      "key": "Cidade",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "endereco"
-    },
-    {
-      "id": 9,
-      "key": "Rua",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "endereco"
-    },
-    {
-      "id": 10,
-      "key": "Complemento",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
-      "required": false,
-      "panelGroup": "endereco"
-    },
-    {
-      "id": 11,
-      "key": "agora eh um numero!",
-      "type": {
-        "key": "numero",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "licenca"
-    },
-    {
-      "id": 12,
-      "key": "Arquivo",
-      "type": {
-        "key": "arquivo",
-        "option": null
-      },
-      "required": false,
-      "panelGroup": "licenca"
-    },
-    {
-      "id": 13,
-      "key": "como entrar na rua x",
-      "type": {
-        "key": "texto",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "usuario"
-    },
-    {
-      "id": 14,
-      "key": "numero de filhos",
-      "type": {
-        "key": "numero",
-        "option": null
-      },
-      "required": true,
-      "panelGroup": "usuario"
+        "key": "file",
+        "options": [
+          {
+            "property": "accept",
+            "value": ".pdf, .doc, .docx",
+            "descricao": "Documento"
+          },
+          {
+            "property": "accept",
+            "value": ".csv, .csvx, .xls, .xlsx, .odf",
+            "descricao": "Planilha"
+          },
+          {
+            "property": "accept",
+            "value": ".png, .jpeg, .jpg",
+            "descricao": "Imagem"
+          }
+        ]
+      }
     }
   ],
   "formularios": [
     {
-      "id": 2,
-      "descricao": "Cadastro",
-      "cidade": "pojuca",
+      "id": 1,
+      "descricao": "teste form",
+      "cidade": "salvador",
       "questions": [
+        {
+          "id": 1,
+          "required": true
+        },
         {
           "id": 2,
           "required": true
@@ -144,174 +111,10 @@
         {
           "id": 3,
           "required": false
-        },
-        {
-          "id": 5,
-          "required": true
-        },
-        {
-          "id": 9,
-          "required": false
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "descricao": "Cadastro de Ambulante",
-      "cidade": "salvador",
-      "questions": [
-        {
-          "id": 2,
-          "required": true
-        },
-        {
-          "id": 3,
-          "required": true
-        },
-        {
-          "id": 5,
-          "required": true
-        },
-        {
-          "id": 6,
-          "required": true
-        },
-        {
-          "id": 7,
-          "required": true
-        },
-        {
-          "id": 8,
-          "required": true
-        },
-        {
-          "id": 9,
-          "required": true
-        },
-        {
-          "id": 10,
-          "required": false
-        },
-        {
-          "id": 11,
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "descricao": "Teste Dinamico 1",
-      "cidade": "salvador",
-      "questions": [
-        {
-          "id": 2,
-          "required": true
-        },
-        {
-          "id": 5,
-          "required": true
-        },
-        {
-          "id": 6,
-          "required": true
-        },
-        {
-          "id": 11,
-          "required": true
-        },
-        {
-          "id": 12,
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "descricao": "pesquisa sobre moradia",
-      "cidade": "salvador",
-      "questions": [
-        {
-          "id": 2,
-          "required": true
-        },
-        {
-          "id": 3,
-          "required": true
         },
         {
           "id": 4,
-          "required": true
-        },
-        {
-          "id": 5,
-          "required": true
-        },
-        {
-          "id": 6,
-          "required": true
-        },
-        {
-          "id": 7,
-          "required": true
-        },
-        {
-          "id": 8,
-          "required": true
-        },
-        {
-          "id": 9,
-          "required": true
-        },
-        {
-          "id": 10,
           "required": false
-        },
-        {
-          "id": 12,
-          "required": true
-        },
-        {
-          "id": 13,
-          "required": true
-        },
-        {
-          "id": 14,
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "descricao": "gfhfghf",
-      "cidade": "salvador",
-      "questions": [
-        {
-          "id": 2,
-          "required": true
-        },
-        {
-          "id": 3,
-          "required": true
-        },
-        {
-          "id": 6,
-          "required": true
-        },
-        {
-          "id": 9,
-          "required": false
-        },
-        {
-          "id": 12,
-          "required": true
-        },
-        {
-          "id": 13,
-          "required": true
-        },
-        {
-          "id": 14,
-          "required": true
         }
       ]
     }
