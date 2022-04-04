@@ -3,46 +3,52 @@
 <form *ngIf="form" [formGroup]="form">
     <div class="row">
         <div class="col-md-12" *ngFor="let quest of questions">
-            <label for="">{{quest.key.toUpperCase()}} </label><span *ngIf="quest.required" class="text-danger"> *</span>
-            <div [ngSwitch]="quest.type.key" [ngClass]="(f.get(quest.key).touched && !f.get(quest.key).valid) ? 'danger': ''">
+            <label for="">{{quest.name.toUpperCase()}} </label><span *ngIf="quest.required" class="text-danger"> *</span>
+            <div [ngSwitch]="quest.type.key" [ngClass]="(f.get(quest.name).touched && !f.get(quest.name).valid) ? 'danger': ''">
 
-                <div *ngSwitchCase="'texto'">
-                    <input class="form-control" [formControlName]="quest.key" type="text">
+                <div *ngSwitchCase="'text'">
+                    <input class="form-control" [formControlName]="quest.name" type="text">
                 </div>
-                <div *ngSwitchCase="'multipla escolha'">
-                    <select [formControlName]="quest.key" id="">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
+                <div *ngSwitchCase="'select'">
+                    <select [formControlName]="quest.name">
+                        <option value="-1" selected> -- Selecione --</option>
+                        <option *ngFor="let o of filterOptions(quest)" [value]="o.value">{{o.value}}
+                            
+                        </option>
                     </select>
                 </div>
-                <div *ngSwitchCase="'numero'">
-                    <input class="form-control" [formControlName]="quest.key" type="number">
+                <div *ngSwitchCase="'number'">
+                    <input class="form-control" [formControlName]="quest.name" type="number">
                 </div>
-                <div *ngSwitchCase="'documento'">
-                    <div [ngSwitch]="quest.type.option">
+                <div *ngSwitchCase="'text'">
+                    <div [ngSwitch]="quest.type.options">
                         <div *ngSwitchCase="'RG'">
-                            <input [formControlName]="quest.key" class="form-control" type="text" placeholder="00.000.000-00">
+                            <input [formControlName]="quest.name" class="form-control" type="text" placeholder="00.000.000-00">
                         </div>
                         <div *ngSwitchCase="'CPF'">
-                            <input [formControlName]="quest.key" class="form-control" type="text" placeholder="000.000.000-00">
+                            <input [formControlName]="quest.name" class="form-control" type="text" placeholder="000.000.000-00">
                         </div>
                         <div *ngSwitchCase="'CNPJ'">
-                            <input [formControlName]="quest.key" class="form-control" type="text" placeholder="00.000.000/0000-00">
+                            <input [formControlName]="quest.name" class="form-control" type="text" placeholder="00.000.000/0000-00">
                         </div>
                     </div>
                 </div>
                 <div *ngSwitchCase="'email'">
-                    <input [formControlName]="quest.key" class="form-control" type="email" [required]="quest.required" />
+                    <input [formControlName]="quest.name" class="form-control" type="email" [required]="quest.required" />
                 </div>
-                <div *ngSwitchCase="'arquivo'">
-                    <input [formControlName]="quest.key" class="form-input-control" type="file" accept="*" multiple [required]="quest.required" />
+                <div *ngSwitchCase="'file'">
+                    <input [formControlName]="quest.name" class="form-input-control" type="file" [accept]="getAcceptProperty(quest)" [multiple]="getMultipleProperty(quest)" [required]="quest.required" />
+                </div>
 
-                </div>
-                <span class="text-danger  text-sm" *ngIf="f.get(quest.key).touched && !f.get(quest.key).valid">Esse campo não está valido.</span>
+                <span class="text-danger  text-sm" *ngIf="f.get(quest.name).touched && !f.get(quest.name).valid">Esse campo não está valido.</span>
             </div>
 
         </div>
     </div>
 </form>
+
+
+
+<div class="row gap-2">
+    <button class="btn btn-primary" (click)="salvarForm()">Salvar</button>
+</div>

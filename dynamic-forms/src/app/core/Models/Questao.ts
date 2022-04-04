@@ -1,14 +1,16 @@
 export interface Questao {
     id?: number
-    key: string, 
+    name: string,
     show?: boolean,
     required: boolean
-    type: { 
-        key: string | 'texto' | 'email' | 'password' | 'numero' | 'select' | 'document'; 
-        option?: {
-            key: null | string  // EX: 'mask' 
+    type: {
+        key: string | 'texto' | 'email' | 'password' | 'numero' | 'select' | 'document';
+        options?: {
             value: string | boolean | number // EX: 'TELEFONE'| "CPF"| "EMAIL" | "CNPJ"
-        } []
-    }    
-    panelGroup?: string
+            property: string,
+            descricao: string
+        }[]
+    }
+    panelGroup?: string;
+    detalhamento?: string
 }

@@ -1,8 +1,8 @@
 
-import { AfterContentInit, AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Subject } from 'rxjs'
 import { BsModalRef } from 'ngx-bootstrap/modal'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionService } from 'src/app/services/questions/question.service';
 import Swal from 'sweetalert2'
 import { Questao } from 'src/app/core/Models/Questao';
@@ -16,7 +16,10 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
   resposta: Subject<any> = new Subject<any>();
   form: FormGroup
   @Input() questao: Questao
-  type: Questao["type"] = { key: "", option: null }
+  @ViewChildren("checkFileOption") checkFileOption: QueryList<ElementRef>
+  type: Questao["type"] = { key: "", options: null }
+  typeOfNumber: string
+  isCoin: boolean
 
   constructor(public modal: BsModalRef, private fb: FormBuilder, private questionsService: QuestionService) { }
 
@@ -28,46 +31,68 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
     // this.type.key = "documento" 
     this.form = this.fb.group({
       id: [null, Validators.nullValidator],
-      key: ['', Validators.required],
-      type: {
-        key: ['', Validators.required],
-        option: ['', Validators.nullValidator],
-        values: ['', Validators.nullValidator]
-      },
+      name: ['', Validators.required],
       required: [false, Validators.nullValidator],
-      panelGroup: ['', Validators.required]
+      panelGroup: ['', Validators.required],
+      detalhamento: [null, Validators.nullValidator],
+      type: {
+        key: ['-1', Validators.required],
+        options: [[], Validators.required]
+      }
     })
   }
 
   ngAfterContentInit(): void {
     if (this.questao) {
+      console.log(this.questao);
       this.form.patchValue({
         id: this.questao.id,
-        key: this.questao.key,
+        name: this.questao.name,
         type:
         {
           key: this.questao.type.key,
-          option: this.questao.type.option
+          options: this.questao.type.options
         },
         required: this.questao.required,
-        panelGroup: this.questao.panelGroup
+        panelGroup: this.questao.panelGroup,
+        detalhamento: this.questao.detalhamento
       })
+
       this.type = this.questao.type
+      
+      if (this.type.key == 'text') {
+        this.type.options.map(o => {
+          if (o.descricao == 'CPF' || 'RG' || 'CNH' || 'CNPJ') {
+            setTimeout(() => {
+              this.selectTextOption.nativeElement.value = 'document';
+              setTimeout(() => {
+                this.textOption.nativeElement.value = o.descricao.toLowerCase()
+              }, 80)
+            }, 250)
+          }
+        })
+      }
+      if (this.type.key == 'select') {
+        this.altOptions = this.type.options
+      }
     }
   }
 
-  setFormType(value: any) {
+  setFormType() {
+    if (this.f.value.type.key == 'select') {
+      this.type.options = this.altOptions
+    }
     this.form.patchValue({
       type: {
         key: this.type.key,
-        option: this.type.option
+        options: this.type.options
       }
     })
-    console.log(value)
   }
 
-
   confirm() {
+    this.setFormType()
+    console.log(this.f.value)
     if (this.questao) {
       this.updateQuestion()
     } else {
@@ -92,5 +117,168 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
   close(value: boolean) {
     this.resposta.next(true)
     this.modal.hide()
+  }
+
+
+  clearSubtypes() {
+    console.log(this.type)
+  }
+
+  /** Contruindo Opções de um input TEXT */
+  @ViewChild('selectTextOption') selectTextOption: ElementRef
+  @ViewChild('textOption') textOption: ElementRef
+  buildTextOption() {
+    console.log(this.selectTextOption.nativeElement.value)
+    console.log(this.textOption.nativeElement.value)
+    this.type.options = []
+    let obj
+    const that = this
+    switch (this.selectTextOption.nativeElement.value) {
+      case 'document':
+        buildTextDocumentOption()
+        break;
+      case 'link':
+        buildTextLinkOption()
+        break;
+    }
+
+    function buildTextLinkOption() {
+      obj = {
+        property: "href",
+        value: "https://",
+        descricao: "Link"
+      }
+    }
+
+    function buildTextDocumentOption() {
+      switch (that.textOption.nativeElement.value) {
+        case "cpf":
+          obj = {
+            property: "mask",
+            value: "000.000.000-00",
+            descricao: "CPF"
+          }
+          break;
+        case "rg":
+          obj = {
+            property: "mask",
+            value: "00.000.000-00",
+            descricao: "RG"
+          }
+          break;
+        case "cnh":
+          obj = {
+            property: "mask",
+            value: "0000000000000",
+            descricao: "CNH"
+          }
+          break;
+        case "cnpj":
+          obj = {
+            property: "mask",
+            value: "000.000.000-00/0000-00",
+            descricao: "CNPJ"
+          }
+          break;
+      }
+    }
+    this.type.options.push(obj)
+  }
+
+  /** Contruindo Opções de um input FILE */
+  buildFileOptions() {
+    let arr = this.checkFileOption.toArray()
+    this.type.options = []
+    arr.forEach(a => {
+      let obj
+      if (a.nativeElement.checked) {
+        switch (a.nativeElement.id) {
+          case "documento":
+            //.pdf, .doc, .docx
+            obj = {
+              property: "accept",
+              value: ".pdf, .doc, .docx",
+              descricao: "Documento"
+            }
+            break
+          case "panilha":
+            //.csv, .csvx, .xls, .xlsx, .odf
+            obj = {
+              property: "accept",
+              value: ".csv, .csvx, .xls, .xlsx, .odf",
+              descricao: "Planilha"
+            }
+            break
+          case "imagem":
+            //.png, .jpeg, .jpg
+            obj = {
+              property: "accept",
+              value: ".png, .jpeg, .jpg",
+              descricao: "Imagem"
+            }
+            break
+          case "audio":
+            //.mp3,.wav, .aac
+            obj = {
+              property: "accept",
+              value: ".mp3,.wav, .aac",
+              descricao: "Audio"
+            }
+            break
+          case "video":
+            //.mp4, .mov, .aac
+            obj = {
+              property: "accept",
+              value: ".mp4, .mov, .aac",
+              descricao: "Video"
+            }
+            break
+        }
+        this.type.options.push(obj)
+        console.log(this.type.options)
+      }
+    })
+  }
+
+
+  /** Construindo opções de uma questão de multipla escolha */
+  altOptions: Questao["type"]["options"] = [
+    {
+      value: "",
+      property: "option",
+      descricao: ""
+    },
+    {
+      value: "",
+      property: "option",
+      descricao: ""
+    },
+    {
+      value: "",
+      property: "option",
+      descricao: ""
+    },
+  ]
+  addOption() {
+    this.altOptions.push({
+      value: "",
+      property: "option",
+      descricao: ""
+    })
+  }
+
+  removeQuestion(id: any) {
+    this.altOptions.splice(this.altOptions.indexOf(id), 1)
+  }
+
+  multipleChoices: any = { property: "multiple", value: false, descricao: "Multiplas escolhas" }
+  toggleMultipleOptionsChoose(value: boolean) {
+    this.multipleChoices.value = value
+    this.altOptions = this.altOptions.filter(o => o.property != "multiple")
+    this.altOptions.push(this.multipleChoices)
+  }
+
+  filterOptions(){
+    return this.altOptions.filter(o => o.property == 'option')
   }
 }

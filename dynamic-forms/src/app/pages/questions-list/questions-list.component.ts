@@ -55,7 +55,7 @@ export class QuestionsListComponent implements OnInit {
 
 
   search() {
-    this.searchData = this.questoes.filter(q => q.key.trim().toLowerCase().indexOf(this.inputText.trim().toLowerCase()) > -1)
+    this.searchData = this.questoes.filter(q => q.name.trim().toLowerCase().indexOf(this.inputText.trim().toLowerCase()) > -1)
 
   }
 

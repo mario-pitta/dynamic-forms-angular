@@ -5,73 +5,196 @@
 </div>
 <div class="modal-body">
     <div class="container">
+
         <form [formGroup]="form">
-            <div class="form-group  col-md-12">
-                <label class="form-label"><strong>Descrição</strong></label>
-                <input type="text" class="form-control" formControlName="key">
-            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">Descrição</label>
+                    <input type="text" class="form-control" formControlName="name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="form-label">Grupo da Questao:</label>
+                    <select class="form-select" formControlName="panelGroup">
+                        <option value="-1" selected>-- Selecione --</option>
+                        <option value="users"> Contato</option>
+                        <option value="empresa"> Empresa</option>
+                        <option value="archive">Licença/Alvará/Declaração</option>
+                        <option value="endereco">Endereço</option>
+                    </select>
+                </div>
 
-            <div class=" form-group col-md-12">
-                <label for="" class="form-label"><strong>Tipo de Entrada : </strong></label>
-                <select #selectTypeKey class="form-select" [(ngModel)]="type.key" [ngModelOptions]="{standalone: true}" (change)="setFormType(this.f)">
-                        <option value="texto" selected>Texto</option>
+                <div class="form-group col-md-6">
+                    <label class="form-label">Tipo de entrada:</label>
+                    <select class="form-select" [(ngModel)]="type.key" [ngModelOptions]="{standalone:true}" (change)="clearSubtypes()">
+                        <option value="-1">Selecione</option>
+                        <option value="text">Texto</option>
                         <option value="email">Email</option>
-                        <option value="numero">Número</option>
-                        <option value="documento">Documento</option>
-                        <option value="arquivo">Arquivo</option>
-                        <option value="multipla escolha">Multipla Escolha</option>
-                    </select>
-            </div>
-            <div class=" form-group col-md-12">
-                <div *ngIf="type.key === 'multipla escolha'">
-                    <label for="" class="form-label"><strong>Quantas Opções :</strong> </label>
-                    <div class="col-md-6">
-                        <input type="radio" name="choce_options" id="choce_options1" class="form-check-input">
-                        <label for="choce_options1" class="form-label" [(ngModel)]="type.option" [ngModelOptions]="{standalone: true}" value="single" (change)="setFormType(this.f)">Seleção Única</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="radio" name="choce_options" id="choce_options2" class="form-check-input">
-                        <label for="choce_options2" class="form-label" [(ngModel)]="type.option" [ngModelOptions]="{standalone: true}" value="multiple" (change)="setFormType(this.f)">Seleção Múltipla</label>
-                    </div>
-                </div>
-            </div>
-            <div class=" form-group col-md-12" *ngIf="type.key === 'documento'">
-                <label class="form-label">Tipo de Documento:</label>
-                <select class="form-select" [(ngModel)]="type.option" [ngModelOptions]="{standalone: true}" (change)="setFormType(this.f)">
-                    <option value="CPF" selected>CPF</option>
-                    <option value="CNPJ">CNPJ</option>
-                    <option value="RG">RG</option>
-                    <option value="CNH">CNH</option>
-                    <option value="CPF/CNPJ">CPF/CNPJ</option>
-                </select>
-            </div>
-            <div class=" form-group col-md-12">
-                <label class="form-label">Grupo da Pergunta:</label>
-                <select class="form-select" formControlName="panelGroup" (change)="setFormType(this.f)">
-                    <option value="usuario" selected>Dados de Usuário</option>
-                    <option value="endereco">Endereço</option>
-                    <option value="contato">Contato</option>
-                    <option value="licenca">Dados da Licença</option>
-                </select>
-            </div>
-            <div class=" form-group col-md-12">
-                <div class="col-md-6">
-                    <input type="checkbox" formControlName="required" id="check_required" class="form-check-input">
-                    <label for="check_required" class="form-label">Obrigatório</label>
-                </div>
-            </div>
-            <!-- <div class=" form-group col-md-12">
-                <div class="col-md-6">
-                    <label for="check_required" class="form-label">Grupo da Pergunta:</label>
-                    <select class="form-select" formControlName="panelGroup" (change)="setFormType(this.f)">
-                        <option value="" selected>Dados de Usuário</option>
-                        <option value="">Endereço</option>
-                        <option value="">Contato</option>
-                        <option value=""></option>
+                        <option value="date">Data</option>
+                        <option value="file">Anexo</option>
+                        <option value="number">Quantidade</option>
+                        <option value="tel">Telefone</option>
+                        <option value="select">Multipla Escolha</option>
                     </select>
                 </div>
-            </div> -->
 
+
+                <div class="form-group col-md-6" *ngIf="this.type.key === 'text'" #divTypeArchive>
+                    <label class="form-label">Formato:</label>
+                    <select class="form-select" #selectTextOption (change)="clearSubtypes()">
+                        <option value="-1">Selecione</option>
+                        <option value="name">Nome Próprio</option>
+                        <option value="phrase">Frase/Texto</option>
+                        <option value="document">Documento</option>
+                        <option value="link">Link</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group row" *ngIf="this.type.key === 'select' ">
+                    <div class="col-md-6 form-group">
+                        <label class="form-label">Numéro de escolhas</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="unique" name="choose" (change)="toggleMultipleOptionsChoose(false)" value="single" checked>
+                            <label class="form-check-label" for="unique">
+                                Única
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" name="choose" (change)="toggleMultipleOptionsChoose(true)" type="radio" id="multiple" value="multiple">
+                            <label class="form-check-label" for="multiple">
+                                Multíplas
+                            </label>
+                        </div>
+                    </div>
+                    <div class=" form-group  col-md-6">
+                        <div class="d-flex justify-content-between p-right form-group">
+                            <label for="" class="form-label">Opções de Escolha:</label>
+                            <button class="btn btn-sm  rounded btn-success mt-1 mb-1" (click)="addOption()">+
+                                <!-- <i-feather name="plus" class="text-light ">
+                                </i-feather> -->
+                            </button>
+                        </div>
+                        <div class="options">
+                            <div class="input-group" *ngFor="let opt of filterOptions() ">
+                                <input type="text" class="form-control mt-1 ask" [name]="opt.descricao" [(ngModel)]="opt.value" [ngModelOptions]="{standalone: true}" placeholder="informe a opção" [id]="'opt-' + altOptions.indexOf(opt)">
+                                <button class="btn rounded btn-icon " (click)="removeQuestion(opt)">x
+                                    <!-- <i-feather name="minus" class="text-danger">
+                                    </i-feather> -->
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6" *ngIf="this.type.key === 'file'">
+                    <label class="d-block">Anexo</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" #checkFileOption (click)="buildFileOptions()" value="documento" id="documento">
+                        <label class="form-check-label" for="documento">
+                            Documento
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" #checkFileOption (click)="buildFileOptions()" value="planilha" id="panilha">
+                        <label class="form-check-label" for="planilha">
+                            Planilha
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" #checkFileOption (click)="buildFileOptions()" value="imagem" id="imagem">
+                        <label class="form-check-label" for="imagem">
+                            Imagem
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" #checkFileOption (click)="buildFileOptions()" value="audio" id="audio">
+                        <label class="form-check-label" for="audio">
+                            Audio
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" #checkFileOption (click)="buildFileOptions()" value="video" id="video">
+                        <label class="form-check-label" for="video">
+                            Video
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6" #divTipoDocumento *ngIf="selectTextOption && selectTextOption.nativeElement.value === 'document'">
+                    <label>Tipo de Documento:</label>
+                    <select class="form-select" #textOption (change)="buildTextOption()">
+                        <option  value="-1" selected>--Selecione--</option>
+                        <option value="cpf">CPF</option>
+                        <option value="rg">RG</option>
+                        <option value="cnpj">CNPJ</option>
+                        <option value="cnh">CNH</option>
+                        <option value="others">Outros</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6" *ngIf="this.type.key === 'number'">
+                    <label>Formato</label>
+                    <div class="form-check">
+                        <input class="form-check-input" name="choiceCoin" type="radio" id="int" [ngModelOptions]="{standalone: true}" [(ngModel)]="typeOfNumber" value="inteiro">
+                        <label class="form-check-label" for="int">
+                            Inteiro
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" name="choiceCoin" type="radio" id="float" [ngModelOptions]="{standalone: true}" [(ngModel)]="typeOfNumber" value="float">
+                        <label class="form-check-label" for="float">
+                            Decimal
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6 d-flex-row" *ngIf="this.type.key === 'number'">
+                    <div class="input-group mb-2">
+                        <div class="input-group-text">
+                            <div class="d-flex justify-content-between align-items-center gap-1">
+                                <label for="">Max:</label>
+                            </div>
+                        </div>
+                        <input type="number" class="form-control" aria-label="Number input with radio button">
+                    </div>
+                    <div class="input-group ">
+                        <div class="input-group-text">
+                            <div class="d-flex justify-content-between align-items-center gap-1">
+                                <label for="">Min:</label>
+                            </div>
+                        </div>
+                        <input type="number" formControlName="min" class="form-control" aria-label="Text input with radio button">
+                    </div>
+                </div>
+                <div class="form-group col-md-6" *ngIf="this.type.key === 'number' && typeOfNumber === 'float'">
+                    <label>Moeda:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="isCoin" id="isCoin" [ngModelOptions]="{standalone: true}" [(ngModel)]="isCoin" value="true">
+                        <label class="form-check-label" for="isCoin">
+                            SIM
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="isCoin" id="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="isCoin" value="false">
+                        <label class="form-check-label" for="false">
+                            NAO
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="form-label">Detalhamento:</label>
+                        <textarea type="text" class="form-control" formControlName="detalhamento"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="required" formControlName="required">
+                        <label class="form-check-label" for="required">Obrigatório por padrão?
+                                </label>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>

@@ -34,7 +34,7 @@
                         <tbody>
                             <tr *ngFor="let q of questions">
                                 <td>{{q.id}}</td>
-                                <td>{{q.key}}</td>
+                                <td>{{q.name}}</td>
                                 <td class="text-center">
                                     <input (change)="checkQuestions()" #checkShowQuestion type="checkbox" [id]="'ckechShow_'+ q.id" class="form-check-input" [(ngModel)]="q.show" [ngModelOptions]="{standalone: true}" />
                                 </td>
