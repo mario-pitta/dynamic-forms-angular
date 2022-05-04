@@ -17,18 +17,22 @@ export class ModalService {
     let initialState = {
       questao: questao
     }
-    const modalRef: BsModalRef = this.modal.show(QuestionFormComponent, {initialState})
+    const modalRef: BsModalRef = this.modal.show(QuestionFormComponent, { initialState })
     return modalRef.content.resposta.asObservable()
 
   }
 
 
-  openFormularioModal(form? : Formulario){
+  openFormularioModal(form?: Formulario) {
     let initialState = {
-      formulario: form
+      formulario: form,
+      config: {
+        class: 'modal-lg'
+      }
     }
 
-    const modalRef = this.modal.show(FormularioFormComponent, {initialState})
+    const modalRef = this.modal.show(FormularioFormComponent, { initialState } )
+    modalRef.setClass('modal-lg')
     return modalRef.content.resposta.asObservable()
   }
 }

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ListFormComponent } from './list-form/list-form.component';
 import { QuestionsListComponent } from "./questions-list/questions-list.component";
 import { FormularioDinamicoComponent } from "./formulario-dinamico/formulario-dinamico.component";
+import { ExibeFormComponent } from "./exibe-form/exibe-form.component";
 
 
 const ROUTES: Routes = [
@@ -13,7 +14,7 @@ const ROUTES: Routes = [
             { path: '', redirectTo: 'list', pathMatch: 'full' },
             { path: 'list', component: QuestionsListComponent },
             { path: 'questionario', component: ListFormComponent },
-            { path: 'formulario_dinamico/:id', component: FormularioDinamicoComponent }
+            { path: 'exibe-form/:id', component: ExibeFormComponent }
         ]
     }
 ]

@@ -1,3 +1,5 @@
+import { FormArray } from "@angular/forms";
+
 export interface Questao {
     id?: number
     name: string,
@@ -12,5 +14,9 @@ export interface Questao {
         }[]
     }
     panelGroup?: string;
-    detalhamento?: string
+    detalhamento?: string;
+    vistoria?: {show: boolean};
+    analise?: {show: boolean};
+    fiscalizacao?: {show: boolean};
+    formOptions?: FormArray;
 }

@@ -1,7 +1,5 @@
 <div class="modal-header">
-    <h3>
-        Questão
-    </h3>
+    <h3>Questão</h3>
 </div>
 <div class="modal-body">
     <div class="container">
@@ -38,18 +36,9 @@
                 </div>
 
 
-                <div class="form-group col-md-6" *ngIf="this.type.key === 'text'" #divTypeArchive>
-                    <label class="form-label">Formato:</label>
-                    <select class="form-select" #selectTextOption (change)="clearSubtypes()">
-                        <option value="-1">Selecione</option>
-                        <option value="name">Nome Próprio</option>
-                        <option value="phrase">Frase/Texto</option>
-                        <option value="document">Documento</option>
-                        <option value="link">Link</option>
-                    </select>
-                </div>
 
 
+                <!-- CAMPOS DO TIPO SELECT -->
                 <div class="form-group row" *ngIf="this.type.key === 'select' ">
                     <div class="col-md-6 form-group">
                         <label class="form-label">Numéro de escolhas</label>
@@ -86,6 +75,7 @@
                     </div>
                 </div>
 
+                <!-- CAMPOS DO TIPO ARQUIVO -->
                 <div class="form-group col-md-6" *ngIf="this.type.key === 'file'">
                     <label class="d-block">Anexo</label>
                     <div class="form-check">
@@ -120,6 +110,19 @@
                     </div>
                 </div>
 
+
+                <!-- CAMPOS DE TIPO TEXTO  -->
+                <div class="form-group col-md-6" *ngIf="this.type.key === 'text'" #divTypeArchive>
+                    <label class="form-label">Formato:</label>
+                    <select class="form-select" #selectTextOption (change)="clearSubtypes(); buildTextOption()">
+                        <option value="-1">Selecione</option>
+                        <option value="name">Nome Próprio</option>
+                        <option value="frase">Frase/Texto</option>
+                        <option value="document">Documento</option>
+                        <option value="link">Link</option>
+                    </select>
+                </div>
+
                 <div class="form-group col-md-6" #divTipoDocumento *ngIf="selectTextOption && selectTextOption.nativeElement.value === 'document'">
                     <label>Tipo de Documento:</label>
                     <select class="form-select" #textOption (change)="buildTextOption()">
@@ -132,16 +135,17 @@
                     </select>
                 </div>
 
+                <!-- CAMPOS DE TIPO NUMBER  -->
                 <div class="form-group col-md-6" *ngIf="this.type.key === 'number'">
                     <label>Formato</label>
                     <div class="form-check">
-                        <input class="form-check-input" name="choiceCoin" type="radio" id="int" [ngModelOptions]="{standalone: true}" [(ngModel)]="typeOfNumber" value="inteiro">
+                        <input class="form-check-input" name="choiceCoin" type="radio" id="int" (change)="toggleIntergerNumber(false)" value="inteiro">
                         <label class="form-check-label" for="int">
                             Inteiro
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" name="choiceCoin" type="radio" id="float" [ngModelOptions]="{standalone: true}" [(ngModel)]="typeOfNumber" value="float">
+                        <input class="form-check-input" name="choiceCoin" type="radio" id="float" (change)="toggleIntergerNumber(true)" value="float">
                         <label class="form-check-label" for="float">
                             Decimal
                         </label>
@@ -155,7 +159,7 @@
                                 <label for="">Max:</label>
                             </div>
                         </div>
-                        <input type="number" class="form-control" aria-label="Number input with radio button">
+                        <input type="number" #inputMaxValue (change)="buildMaxOption($event)" class="form-control" aria-label="Escolher o valor máximo possível">
                     </div>
                     <div class="input-group ">
                         <div class="input-group-text">
@@ -163,19 +167,19 @@
                                 <label for="">Min:</label>
                             </div>
                         </div>
-                        <input type="number" formControlName="min" class="form-control" aria-label="Text input with radio button">
+                        <input type="number" #inputMinValue (change)="buildMinOption($event)" class="form-control" aria-label="Escolher o valor minimo possível">
                     </div>
                 </div>
-                <div class="form-group col-md-6" *ngIf="this.type.key === 'number' && typeOfNumber === 'float'">
+                <div class="form-group col-md-6" *ngIf="this.type.key === 'number' && isFloat">
                     <label>Moeda:</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="isCoin" id="isCoin" [ngModelOptions]="{standalone: true}" [(ngModel)]="isCoin" value="true">
+                        <input class="form-check-input" type="radio" (change)="buildCoinMaskProperty(true)" name="isCoin" id="isCoin" value="true">
                         <label class="form-check-label" for="isCoin">
                             SIM
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="isCoin" id="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="isCoin" value="false">
+                        <input class="form-check-input" type="radio" (change)="buildCoinMaskProperty(false)" name="isCoin" id="false" value="false">
                         <label class="form-check-label" for="false">
                             NAO
                         </label>

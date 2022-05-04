@@ -1,54 +1,146 @@
-<h3>Formulario dinamico!! </h3>
+<div class="row">
 
-<form *ngIf="form" [formGroup]="form">
-    <div class="row">
-        <div class="col-md-12" *ngFor="let quest of questions">
-            <label for="">{{quest.name.toUpperCase()}} </label><span *ngIf="quest.required" class="text-danger"> *</span>
-            <div [ngSwitch]="quest.type.key" [ngClass]="(f.get(quest.name).touched && !f.get(quest.name).valid) ? 'danger': ''">
+    <hr>
+    <form *ngIf="form" [formGroup]="form">
+        <div class="row">
+            <div class="card col-12" *ngFor="let panel of panelArray">
+                <div class="card-header">
+                    <strong class="card-title">{{panel}}</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div *ngFor="let quest of questions">
+                            <div *ngIf="quest.panelGroup == panel" class="col-12">
+                                <label [for]="quest.name"><strong>{{quest.name.toUpperCase()}}</strong> </label><span *ngIf="quest.required" class="text-danger"> *</span>
+                                <div [ngSwitch]="quest.type.key" [ngClass]="(f.get(quest.name).touched && !f.get(quest.name).valid) ? 'danger': ''">
 
-                <div *ngSwitchCase="'text'">
-                    <input class="form-control" [formControlName]="quest.name" type="text">
-                </div>
-                <div *ngSwitchCase="'select'">
-                    <select [formControlName]="quest.name">
-                        <option value="-1" selected> -- Selecione --</option>
-                        <option *ngFor="let o of filterOptions(quest)" [value]="o.value">{{o.value}}
-                            
-                        </option>
-                    </select>
-                </div>
-                <div *ngSwitchCase="'number'">
-                    <input class="form-control" [formControlName]="quest.name" type="number">
-                </div>
-                <div *ngSwitchCase="'text'">
-                    <div [ngSwitch]="quest.type.options">
-                        <div *ngSwitchCase="'RG'">
-                            <input [formControlName]="quest.name" class="form-control" type="text" placeholder="00.000.000-00">
-                        </div>
-                        <div *ngSwitchCase="'CPF'">
-                            <input [formControlName]="quest.name" class="form-control" type="text" placeholder="000.000.000-00">
-                        </div>
-                        <div *ngSwitchCase="'CNPJ'">
-                            <input [formControlName]="quest.name" class="form-control" type="text" placeholder="00.000.000/0000-00">
+
+                                    <div *ngSwitchCase="'select'">
+                                        <div *ngIf="!getMultipleProperty(quest); else checkboxes">
+                                            <div *ngIf="quest.type.options.length < 5; else dropdown">
+                                                <div class="form-check" *ngFor="let o of filterOptions(quest)">
+                                                    <input class="form-check-input" (change)="emitChange(quest)" type="radio" [name]="quest.name" [formControlName]="quest.name" [value]="o.descricao" [id]="'radioBtnOptions_' + quest.name + '_' + o.descricao">
+                                                    <label class="form-check-label" [for]="'radioBtnOptions' + o.descricao">
+                                                    {{o.descricao}}
+                                                </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <ng-template #dropdown>
+                                            <select [id]="quest.name" [formControlName]="quest.name" (change)="emitChange(quest)">
+                                            <option value="-1" selected> -- Selecione --</option>
+                                            <option *ngFor="let o of filterOptions(quest)" [value]="o.descricao">{{o.descricao}}</option>
+                                        </select>
+                                        </ng-template>
+
+                                        <ng-template #checkboxes>
+                                            <div class="form-check" *ngFor="let o of filterOptions(quest)">
+                                                <div>
+                                                    <input #checkQuest class="form-check-input" [disabled]="action != 'R'" [checked]="form.get(quest.name).value.indexOf(o.descricao) > -1" (change)="getSelectedOptions($event, quest, checkQuest);emitChange(quest)" type="checkbox" [id]="'chkBox_' + quest.name + '_' + o.descricao">
+                                                    <label class="form-check-label" [for]="'chkBox_' + quest.name + '_' + o.descricao">
+                                                        {{o.descricao}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+
+                                    <div *ngSwitchCase="'number'">
+                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" class="form-control" [id]="quest.name" [formControlName]="quest.name" (change)="emitChange(quest)" [step]="(getFloat(quest)) ? (getMask(quest) && getMask(quest).descricao == 'isCoin') ? 0.01 : 0.1 : 1"
+                                            type="number" [value]="(getMinValue(quest)) ? getMinValue(quest) : null" [min]="(getMinValue(quest)) ? getMinValue(quest) : ''" [max]="(getMaxValue(quest)) ? getMaxValue(quest) : ''" />
+                                        <!-- <input class="form-control" [id]="quest.name" [formControlName]="quest.name" [step]="(getFloat(quest)) ? 0.01 : 0.1" type="number" [value]="(getMinValue(quest)) ? getMinValue(quest) : null" [min]="(getMinValue(quest)) ? getMinValue(quest) : null" [max]="(getMaxValue(quest)) ? getMaxValue(quest) : null" /> -->
+                                    </div>
+
+                                    <div *ngSwitchCase="'text'">
+                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" *ngIf="!getTextAreaPropery(quest);else textArea" [formControlName]="quest.name" class="form-control " type="text"
+                                            [placeholder]="(getMask(quest)) ? getMask(quest).value.toString() : ''" [mask]="getMask(quest) ? getMask(quest).value.toString() : null" [ngStyle]="(!getMask(quest)) ? {'text-transform': 'capitalize'} : {'text-transform': null}">
+                                        <ng-template #textArea>
+                                            <textarea [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" name="" id="" style="resize: none;" cols="30" rows="3" [formControlName]="quest.name" class="form-control " type="text" [placeholder]="(getMask(quest)) ? getMask(quest).value.toString() : ''"
+                                                [mask]="getMask(quest) ? getMask(quest).value.toString() : null" [ngStyle]="(!getMask(quest)) ? {'text-transform': 'capitalize'} : {'text-transform': null}"></textarea>
+                                        </ng-template>
+                                    </div>
+                                    <div *ngSwitchCase="'tel'">
+                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control" type="text" [required]="quest.required" [placeholder]="'(00) 0 0000-0000'"
+                                            [mask]="'(00) 0 0000-0000'" />
+                                    </div>
+                                    <div *ngSwitchCase="'email'">
+                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control" type="email" placeholder="seu@email.com" [pattern]="emailRegex"
+                                            [required]="quest.required" />
+                                    </div>
+                                    <div *ngSwitchCase="'file'">
+                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-input-control" type="file" (change)="changeFile($event, quest)" [accept]="getAcceptProperty(quest)"
+                                            [multiple]="getMultipleProperty(quest)" [required]="quest.required" />
+                                    </div>
+                                    <div *ngSwitchCase="'date'">
+                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control" type="date" [required]="quest.required " />
+                                    </div>
+                                    <!-- <span class="text-danger text-sm" *ngIf="f.get(quest.name).touched && !f.get(quest.name).valid ">Esse campo não está valido.</span> -->
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div *ngSwitchCase="'email'">
-                    <input [formControlName]="quest.name" class="form-control" type="email" [required]="quest.required" />
-                </div>
-                <div *ngSwitchCase="'file'">
-                    <input [formControlName]="quest.name" class="form-input-control" type="file" [accept]="getAcceptProperty(quest)" [multiple]="getMultipleProperty(quest)" [required]="quest.required" />
-                </div>
+                <div class="row mt-1 mb-2 border-1" *ngIf="action !== 'R' ">
+                    <hr class="col-md-12">
+                    <div class="d-flex" *ngIf="action == 'A'">
+                        <div class="col-md-12">
+                            <strong><span> Analise</span></strong>
+                            <div class="form-check">
+                                <input class="form-check-input" value="true" type="radio">
+                                <label class="form-check-label">SIM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" value="false" type="radio">
+                                <label class="form-check-label">NÃO</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Justifique </label>
+                            <input class="form-control" type="text" />
+                        </div>
+                    </div>
 
-                <span class="text-danger  text-sm" *ngIf="f.get(quest.name).touched && !f.get(quest.name).valid">Esse campo não está valido.</span>
+                    <div *ngIf="action == 'V' ">
+                        <div class="col-md-6">
+                            <strong><span> Vistoria</span></strong>
+                            <div class="form-check">
+                                <input class="form-check-input" value="true" type="radio">
+                                <label class="form-check-label">SIM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" value="false" type="radio">
+                                <label class="form-check-label">NÃO</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Justifique </label>
+                            <input class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div *ngIf="action == 'F'">
+                        <div class="col-md-6">
+                            <strong>
+                            <span> Fiscal</span>
+                        </strong>
+                            <div class="form-check">
+                                <input class="form-check-input" value="true" type="radio">
+                                <label class="form-check-label">SIM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" value="false" type="radio">
+                                <label class="form-check-label">NÃO</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Justifique </label>
+                            <input class="form-control" type="text" />
+                        </div>
+                    </div>
+                </div>
             </div>
-
+            <br><br>
         </div>
-    </div>
-</form>
-
-
-
-<div class="row gap-2">
-    <button class="btn btn-primary" (click)="salvarForm()">Salvar</button>
-</div>
+    </form>

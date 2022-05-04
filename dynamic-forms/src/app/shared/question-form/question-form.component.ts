@@ -6,6 +6,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { QuestionService } from 'src/app/services/questions/question.service';
 import Swal from 'sweetalert2'
 import { Questao } from 'src/app/core/Models/Questao';
+import { Util } from 'src/app/core/Util/Util';
 
 @Component({
   selector: 'app-question-form',
@@ -17,9 +18,8 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
   form: FormGroup
   @Input() questao: Questao
   @ViewChildren("checkFileOption") checkFileOption: QueryList<ElementRef>
-  type: Questao["type"] = { key: "", options: null }
-  typeOfNumber: string
-  isCoin: boolean
+  type: Questao["type"] = { key: "", options: [] }
+  isFloat: boolean
 
   constructor(public modal: BsModalRef, private fb: FormBuilder, private questionsService: QuestionService) { }
 
@@ -59,7 +59,7 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
       })
 
       this.type = this.questao.type
-      
+
       if (this.type.key == 'text') {
         this.type.options.map(o => {
           if (o.descricao == 'CPF' || 'RG' || 'CNH' || 'CNPJ') {
@@ -121,15 +121,13 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
 
 
   clearSubtypes() {
-    console.log(this.type)
+
   }
 
   /** Contruindo Opções de um input TEXT */
   @ViewChild('selectTextOption') selectTextOption: ElementRef
   @ViewChild('textOption') textOption: ElementRef
   buildTextOption() {
-    console.log(this.selectTextOption.nativeElement.value)
-    console.log(this.textOption.nativeElement.value)
     this.type.options = []
     let obj
     const that = this
@@ -140,6 +138,12 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
       case 'link':
         buildTextLinkOption()
         break;
+      case 'frase':
+        buildTextFraseOption()
+        break;
+      case 'name':
+        buildTextNameOption()
+        break;
     }
 
     function buildTextLinkOption() {
@@ -149,6 +153,23 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
         descricao: "Link"
       }
     }
+
+    function buildTextFraseOption() {
+      obj = {
+        property: "textarea",
+        value: "true",
+        descricao: "textarea"
+      }
+    }
+
+    function buildTextNameOption() {
+      obj = {
+        property: "camel-case",
+        value: "camel-case",
+        descricao: "camel-case"
+      }
+    }
+
 
     function buildTextDocumentOption() {
       switch (that.textOption.nativeElement.value) {
@@ -176,12 +197,13 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
         case "cnpj":
           obj = {
             property: "mask",
-            value: "000.000.000-00/0000-00",
+            value: "00.000.000/0000-00",
             descricao: "CNPJ"
           }
           break;
       }
     }
+
     this.type.options.push(obj)
   }
 
@@ -242,6 +264,7 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
 
 
   /** Construindo opções de uma questão de multipla escolha */
+  //#region 
   altOptions: Questao["type"]["options"] = [
     {
       value: "",
@@ -278,7 +301,49 @@ export class QuestionFormComponent implements OnInit, AfterContentInit {
     this.altOptions.push(this.multipleChoices)
   }
 
-  filterOptions(){
+  filterOptions() {
     return this.altOptions.filter(o => o.property == 'option')
+  }
+  //#endregion
+
+
+  /** Contruindo opções para input number */
+  buildNumberOptions() {
+
+  }
+
+  integerValue: any = { property: "float", value: false, descricao: "float" }
+  toggleIntergerNumber(value: boolean) {
+    console.log(value)
+    this.isFloat = value
+    this.type.options = this.type.options.filter(o => o.property !== "float")
+    if (value) {
+      this.integerValue.value = value
+      this.type.options.push(this.integerValue)
+    }
+    console.log(this.type.options)
+  }
+
+  buildCoinMaskProperty(value: boolean) {
+    console.log(value)
+    let obj = { property: "mask", value: "", descricao: "isCoin" }
+    this.type.options = this.type.options.filter(o => o.property !== "mask")
+    this.type.options.push(obj)
+  }
+
+  buildMinOption(e: any) {
+    console.log(e.target.value)
+    this.type.options = this.type.options.filter(o => o.property !== "min")
+    let obj = { property: "min", value: e.target.value, descricao: "min" }
+
+    this.type.options.push(obj)
+  }
+
+  buildMaxOption(e: any) {
+    console.log(e.target.value)
+    this.type.options = this.type.options.filter(o => o.property !== "max")
+    let obj = { property: "max", value: e.target.value, descricao: "max" }
+    this.type.options.push(obj)
+
   }
 }

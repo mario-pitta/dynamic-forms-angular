@@ -9,6 +9,7 @@
     "author": "Mario Pitta @mj_pitta",
     "license": "ISC",
     "dependencies": {
+        "angular-archwizard": "^7.0.0",
         "ngx-mask": "^13.1.4"
     }
 }

@@ -28,7 +28,10 @@
                         <thead>
                             <th>Id</th>
                             <th>Descrição</th>
-                            <th>Exibe</th>
+                            <th>Requerente</th>
+                            <th>Análise</th>
+                            <th>Vistoria</th>
+                            <th>Fiscalização</th>
                             <th>Obrigatório</th>
                         </thead>
                         <tbody>
@@ -36,11 +39,23 @@
                                 <td>{{q.id}}</td>
                                 <td>{{q.name}}</td>
                                 <td class="text-center">
-                                    <input (change)="checkQuestions()" #checkShowQuestion type="checkbox" [id]="'ckechShow_'+ q.id" class="form-check-input" [(ngModel)]="q.show" [ngModelOptions]="{standalone: true}" />
+                                    <input (change)="checkQuestions()" #checkRequerimentoQuestion type="checkbox" [id]="'ckechRequerimento_'+ q.id" class="form-check-input" [(ngModel)]="q.show" [ngModelOptions]="{standalone: true}" />
                                 </td>
                                 <td class="text-center">
-                                    <input (change)="checkQuestions()" #checkRequiredQuestion type="checkbox" [id]="'ckechRequired_'+ q.id" class="form-check-input" [checked]="q.required" />
+                                    <input (change)="checkQuestions()" #checkAnaliseQuestion type="checkbox" [id]="'checkAnalise_'+ q.id" class="form-check-input" [ngModelOptions]="{standalone: true}" *ngIf="q.analise" [(ngModel)]="q.analise.show" />
                                 </td>
+                                <td class="text-center">
+                                    <input (change)="checkQuestions()" #checkVistoriaQuestion type="checkbox" [id]="'checkVistoria_'+ q.id" class="form-check-input" [ngModelOptions]="{standalone: true}" *ngIf="q.vistoria" [(ngModel)]="q.vistoria.show" />
+                                </td>
+                                <td class="text-center">
+                                    <input (change)="checkQuestions()" #checkFiscalizacaoQuestion type="checkbox" [id]="'checkFiscalizacao_'+ q.id" class="form-check-input" [ngModelOptions]="{standalone: true}" *ngIf="q.fiscalizacao" [(ngModel)]="q.fiscalizacao.show" />
+                                </td>
+                                <td class="text-center">
+                                    <input (change)="checkQuestions()" #checkRequiredQuestion type="checkbox" [id]="'ckechRequired_'+ q.id" class="form-check-input" [ngModelOptions]="{standalone: true}" [(ngModel)]="q.required" />
+                                </td>
+                                <!-- <td class="text-center">
+                                    <input (change)="checkQuestions()" #checkRequiredQuestion type="checkbox" [id]="'ckechRequired_'+ q.id" class="form-check-input" [checked]="q.required" />
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>

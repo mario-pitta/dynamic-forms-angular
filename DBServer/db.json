@@ -68,7 +68,7 @@
     },
     {
       "id": 4,
-      "name": "Arquivo ",
+      "name": "Arquivo",
       "required": false,
       "panelGroup": "archive",
       "detalhamento": null,
@@ -92,6 +92,324 @@
           }
         ]
       }
+    },
+    {
+      "id": 5,
+      "name": "CNPJ",
+      "required": true,
+      "panelGroup": "empresa",
+      "detalhamento": null,
+      "type": {
+        "key": "text",
+        "options": [
+          {
+            "property": "mask",
+            "value": "00.000.000/0000-00",
+            "descricao": "CNPJ"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Telefone",
+      "required": false,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "tel",
+        "options": null
+      }
+    },
+    {
+      "id": 7,
+      "name": "Email",
+      "required": true,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "email",
+        "options": null
+      }
+    },
+    {
+      "id": 8,
+      "name": "Numero",
+      "required": true,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "number",
+        "options": [
+          {
+            "property": "max",
+            "value": "0",
+            "descricao": "max"
+          },
+          {
+            "property": "min",
+            "value": "150",
+            "descricao": "min"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "Moeda",
+      "required": false,
+      "panelGroup": "empresa",
+      "detalhamento": null,
+      "type": {
+        "key": "number",
+        "options": [
+          {
+            "property": "float",
+            "value": true,
+            "descricao": "float"
+          },
+          {
+            "property": "mask",
+            "value": "",
+            "descricao": "isCoin"
+          },
+          {
+            "property": "max",
+            "value": "150000",
+            "descricao": "max"
+          },
+          {
+            "property": "min",
+            "value": "350",
+            "descricao": "min"
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "name": "Area desmatada",
+      "required": true,
+      "panelGroup": "archive",
+      "detalhamento": null,
+      "type": {
+        "key": "number",
+        "options": [
+          {
+            "property": "float",
+            "value": true,
+            "descricao": "float"
+          },
+          {
+            "property": "mask",
+            "value": "",
+            "descricao": "isCoin"
+          },
+          {
+            "property": "min",
+            "value": "0",
+            "descricao": "min"
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "Data",
+      "required": true,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "date",
+        "options": []
+      }
+    },
+    {
+      "id": 12,
+      "name": "Nome Completo",
+      "required": false,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "text",
+        "options": []
+      }
+    },
+    {
+      "id": 13,
+      "name": "SIM / NÃO",
+      "required": false,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "select",
+        "options": [
+          {
+            "value": "SIM",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "NÃO",
+            "property": "option",
+            "descricao": ""
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "name": "Frase/Texto",
+      "required": true,
+      "panelGroup": "archive",
+      "detalhamento": null,
+      "type": {
+        "key": "text",
+        "options": [
+          {
+            "property": "textarea",
+            "value": "true",
+            "descricao": "textarea"
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "name": "MUITAS OPÇÕES",
+      "required": true,
+      "panelGroup": "users",
+      "detalhamento": null,
+      "type": {
+        "key": "select",
+        "options": [
+          {
+            "value": "Opção 1",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "Opção 2",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "Opção 3",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "Opção 4",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "Opção 5",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "Opção 6",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "property": "multiple",
+            "value": true,
+            "descricao": "Multiplas escolhas"
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "name": "Select",
+      "required": true,
+      "panelGroup": "endereco",
+      "detalhamento": null,
+      "type": {
+        "key": "select",
+        "options": [
+          {
+            "value": "1",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "2",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "3",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "4",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "5",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "6",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "7",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "8",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "9",
+            "property": "option",
+            "descricao": ""
+          },
+          {
+            "value": "10",
+            "property": "option",
+            "descricao": ""
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "name": "Area de Doação",
+      "required": true,
+      "panelGroup": "archive",
+      "detalhamento": null,
+      "type": {
+        "key": "number",
+        "options": []
+      }
+    },
+    {
+      "id": 18,
+      "name": "Bolo",
+      "required": true,
+      "panelGroup": "archive",
+      "detalhamento": "xxxxxxxxxx",
+      "type": {
+        "key": "text",
+        "options": [
+          {
+            "property": "textarea",
+            "value": "true",
+            "descricao": "textarea"
+          }
+        ]
+      }
     }
   ],
   "formularios": [
@@ -102,19 +420,241 @@
       "questions": [
         {
           "id": 1,
-          "required": true
+          "required": true,
+          "show": false,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": false
+          }
         },
         {
           "id": 2,
-          "required": true
+          "required": true,
+          "show": false,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": true
+          }
         },
         {
           "id": 3,
-          "required": false
+          "required": true,
+          "show": false,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
         },
         {
           "id": 4,
-          "required": false
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 5,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 6,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 7,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 8,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 9,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 10,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 11,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 12,
+          "required": false,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 13,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 14,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 15,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 16,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
+        },
+        {
+          "id": 17,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": false
+          },
+          "analise": {
+            "show": false
+          },
+          "vistoria": {
+            "show": false
+          }
         }
       ]
     }

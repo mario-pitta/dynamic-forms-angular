@@ -20,6 +20,10 @@ export class FormularioFormComponent implements OnInit {
   resposta: Subject<any> = new Subject();
   @ViewChildren('checkShowQuestion') checkShowQuestion: QueryList<any>
   @ViewChildren('checkRequiredQuestion') checkRequiredQuestion: QueryList<any>
+  @ViewChildren('checkFiscalizacaoQuestion') checkFiscalizacaoQuestion: QueryList<any>
+  @ViewChildren('checkVistoriaQuestion') checkVistoriaQuestion: QueryList<any>
+  @ViewChildren('checkAnaliseQuestion') checkAnaliseQuestion: QueryList<any>
+  @ViewChildren('checkRequerimentoQuestion') checkRequerimentoQuestion: QueryList<any>
   constructor(public modal: BsModalRef, private fb: FormBuilder, private questionsService: QuestionService, private formService: FormulariosService) { }
 
   ngOnInit() {
@@ -42,6 +46,18 @@ export class FormularioFormComponent implements OnInit {
 
       if (this.questions.length > 0) {
         if (this.f.value.questions.length > 0) {
+          this.questions.forEach(q => {
+            q.show = false
+            q.fiscalizacao = {
+              show: false
+            }
+            q.analise = {
+              show: false
+            }
+            q.vistoria = {
+              show: false
+            }
+          })
           this.completeQuestions()
         }
       }
@@ -59,7 +75,7 @@ export class FormularioFormComponent implements OnInit {
       })
 
 
-      console.log(this.f.value)
+      // console.log(this.f.value)
     }
   }
 
@@ -76,15 +92,88 @@ export class FormularioFormComponent implements OnInit {
       questions: questions
     })
 
+    this.getSelectedChecks()
+
+  }
+
+  getSelectedChecks() {
+    let questions:
+      {
+        id: number,
+        required: boolean,
+        fiscalizacao: {
+          show: boolean
+        },
+        analise: {
+          show: boolean
+        },
+        vistoria: {
+          show: boolean
+        },
+
+        show: boolean
+
+      }[] = []
+
+    this.questions.forEach(q => {
+      let i = 0
+      let obj = {
+        id: q.id,
+        required: q.required,
+
+        show: q.show,
+        fiscalizacao: {
+          show: q.fiscalizacao.show
+        },
+        analise: {
+          show: q.analise.show
+        },
+        vistoria: {
+          show: q.vistoria.show
+        },
+      }
+      if (obj.analise.show || obj.fiscalizacao.show || obj.vistoria.show || obj.show) {
+        questions.push(obj)
+      }
+      i++
+    })
+
+    // console.log(questions)
+    this.form.patchValue({ questions: questions })
+    //metodo para percorrer os checkboxes 
+
+
   }
 
   completeQuestions() {
     this.f.value.questions.forEach((fQ: any) => {
-      this.questions.forEach(q => {
+      this.questions.forEach((q: Questao) => {
+        q.show = fQ.show
+        q.fiscalizacao = {
+          show: fQ.fiscalizacao.show
+        }
+        q.analise = {
+          show: fQ.analise.show
+        }
+        q.vistoria = {
+          show: fQ.vistoria.show
+        }
+        // console.log(q)
+        this.log(q)
         if (q.id == fQ.id) {
           q.show = true
-          if(fQ.required){
-            q.required =true
+          q.show = fQ.show
+          q.fiscalizacao = {
+            show: fQ.fiscalizacao.show
+          }
+          q.analise = {
+            show: fQ.analise.show
+          }
+          q.vistoria = {
+            show: fQ.vistoria.show
+          }
+          if (fQ.required) {
+            q.required = true
           }
         }
       })
@@ -93,11 +182,11 @@ export class FormularioFormComponent implements OnInit {
 
 
   log(value: any) {
-    console.log(value)
+    // console.log(value)
   }
 
   confirm() {
-    
+
 
     if (this.formulario) {
       this.update()

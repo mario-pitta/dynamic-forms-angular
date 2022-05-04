@@ -9,13 +9,11 @@ import { PagesModule } from './pages/pages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormularioFormComponent } from './shared/formulario-form/formulario-form.component';
-// import {  NgxMaskModule } from 'ngx-mask';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 
-
-// const maskConfig: Partial<IConfig> = {
-//   validation: false,
-// };
-
+const maskConfig: Partial<IConfig> = {
+  validation: true,
+};
 
 @NgModule({
   declarations: [
@@ -32,7 +30,7 @@ import { FormularioFormComponent } from './shared/formulario-form/formulario-for
     ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    // NgxMaskModule.forRoot(maskConfig)
+    NgxMaskModule.forRoot(maskConfig)
   ],
   exports: [FormsModule, ReactiveFormsModule],
   providers: [HttpClientModule],
