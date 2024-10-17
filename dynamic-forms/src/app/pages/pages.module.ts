@@ -10,11 +10,12 @@ import { QuestionsListComponent } from "./questions-list/questions-list.componen
 import { ExibeFormComponent } from './exibe-form/exibe-form.component';
 import { AccordionFormModule } from './accordion-form/accordion-form.module';
 import { WizardFormModule } from './wizard-form/wizard-form.module';
+import { FormularioDinamicoModule } from './formulario-dinamico/formulario-dinamico-module';
 
 
 @NgModule({
-    declarations: [QuestionsListComponent, ListFormComponent,ExibeFormComponent],
-    imports: [CommonModule, PagesRoutingModule, FormsModule, ReactiveFormsModule, NgxMaskModule, AccordionFormModule, WizardFormModule],
+    declarations: [QuestionsListComponent, ListFormComponent,ExibeFormComponent,  ],
+    imports: [CommonModule, PagesRoutingModule, FormsModule, ReactiveFormsModule, NgxMaskModule, AccordionFormModule, WizardFormModule, FormularioDinamicoModule],
     providers: [HttpClient],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

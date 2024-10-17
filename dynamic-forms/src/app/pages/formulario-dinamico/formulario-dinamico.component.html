@@ -1,146 +1,116 @@
 <div class="row">
 
-    <hr>
-    <form *ngIf="form" [formGroup]="form">
-        <div class="row">
-            <div class="card col-12" *ngFor="let panel of panelArray">
-                <div class="card-header">
-                    <strong class="card-title">{{panel}}</strong>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div *ngFor="let quest of questions">
-                            <div *ngIf="quest.panelGroup == panel" class="col-12">
-                                <label [for]="quest.name"><strong>{{quest.name.toUpperCase()}}</strong> </label><span *ngIf="quest.required" class="text-danger"> *</span>
-                                <div [ngSwitch]="quest.type.key" [ngClass]="(f.get(quest.name).touched && !f.get(quest.name).valid) ? 'danger': ''">
-
-
-                                    <div *ngSwitchCase="'select'">
-                                        <div *ngIf="!getMultipleProperty(quest); else checkboxes">
-                                            <div *ngIf="quest.type.options.length < 5; else dropdown">
-                                                <div class="form-check" *ngFor="let o of filterOptions(quest)">
-                                                    <input class="form-check-input" (change)="emitChange(quest)" type="radio" [name]="quest.name" [formControlName]="quest.name" [value]="o.descricao" [id]="'radioBtnOptions_' + quest.name + '_' + o.descricao">
-                                                    <label class="form-check-label" [for]="'radioBtnOptions' + o.descricao">
-                                                    {{o.descricao}}
-                                                </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <ng-template #dropdown>
-                                            <select [id]="quest.name" [formControlName]="quest.name" (change)="emitChange(quest)">
-                                            <option value="-1" selected> -- Selecione --</option>
-                                            <option *ngFor="let o of filterOptions(quest)" [value]="o.descricao">{{o.descricao}}</option>
-                                        </select>
-                                        </ng-template>
-
-                                        <ng-template #checkboxes>
-                                            <div class="form-check" *ngFor="let o of filterOptions(quest)">
-                                                <div>
-                                                    <input #checkQuest class="form-check-input" [disabled]="action != 'R'" [checked]="form.get(quest.name).value.indexOf(o.descricao) > -1" (change)="getSelectedOptions($event, quest, checkQuest);emitChange(quest)" type="checkbox" [id]="'chkBox_' + quest.name + '_' + o.descricao">
-                                                    <label class="form-check-label" [for]="'chkBox_' + quest.name + '_' + o.descricao">
-                                                        {{o.descricao}}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-
-                                    <div *ngSwitchCase="'number'">
-                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" class="form-control" [id]="quest.name" [formControlName]="quest.name" (change)="emitChange(quest)" [step]="(getFloat(quest)) ? (getMask(quest) && getMask(quest).descricao == 'isCoin') ? 0.01 : 0.1 : 1"
-                                            type="number" [value]="(getMinValue(quest)) ? getMinValue(quest) : null" [min]="(getMinValue(quest)) ? getMinValue(quest) : ''" [max]="(getMaxValue(quest)) ? getMaxValue(quest) : ''" />
-                                        <!-- <input class="form-control" [id]="quest.name" [formControlName]="quest.name" [step]="(getFloat(quest)) ? 0.01 : 0.1" type="number" [value]="(getMinValue(quest)) ? getMinValue(quest) : null" [min]="(getMinValue(quest)) ? getMinValue(quest) : null" [max]="(getMaxValue(quest)) ? getMaxValue(quest) : null" /> -->
-                                    </div>
-
-                                    <div *ngSwitchCase="'text'">
-                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" *ngIf="!getTextAreaPropery(quest);else textArea" [formControlName]="quest.name" class="form-control " type="text"
-                                            [placeholder]="(getMask(quest)) ? getMask(quest).value.toString() : ''" [mask]="getMask(quest) ? getMask(quest).value.toString() : null" [ngStyle]="(!getMask(quest)) ? {'text-transform': 'capitalize'} : {'text-transform': null}">
-                                        <ng-template #textArea>
-                                            <textarea [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" name="" id="" style="resize: none;" cols="30" rows="3" [formControlName]="quest.name" class="form-control " type="text" [placeholder]="(getMask(quest)) ? getMask(quest).value.toString() : ''"
-                                                [mask]="getMask(quest) ? getMask(quest).value.toString() : null" [ngStyle]="(!getMask(quest)) ? {'text-transform': 'capitalize'} : {'text-transform': null}"></textarea>
-                                        </ng-template>
-                                    </div>
-                                    <div *ngSwitchCase="'tel'">
-                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control" type="text" [required]="quest.required" [placeholder]="'(00) 0 0000-0000'"
-                                            [mask]="'(00) 0 0000-0000'" />
-                                    </div>
-                                    <div *ngSwitchCase="'email'">
-                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control" type="email" placeholder="seu@email.com" [pattern]="emailRegex"
-                                            [required]="quest.required" />
-                                    </div>
-                                    <div *ngSwitchCase="'file'">
-                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-input-control" type="file" (change)="changeFile($event, quest)" [accept]="getAcceptProperty(quest)"
-                                            [multiple]="getMultipleProperty(quest)" [required]="quest.required" />
-                                    </div>
-                                    <div *ngSwitchCase="'date'">
-                                        <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''" (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control" type="date" [required]="quest.required " />
-                                    </div>
-                                    <!-- <span class="text-danger text-sm" *ngIf="f.get(quest.name).touched && !f.get(quest.name).valid ">Esse campo não está valido.</span> -->
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-1 mb-2 border-1" *ngIf="action !== 'R' ">
-                    <hr class="col-md-12">
-                    <div class="d-flex" *ngIf="action == 'A'">
-                        <div class="col-md-12">
-                            <strong><span> Analise</span></strong>
-                            <div class="form-check">
-                                <input class="form-check-input" value="true" type="radio">
-                                <label class="form-check-label">SIM</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" value="false" type="radio">
-                                <label class="form-check-label">NÃO</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Justifique </label>
-                            <input class="form-control" type="text" />
-                        </div>
-                    </div>
-
-                    <div *ngIf="action == 'V' ">
-                        <div class="col-md-6">
-                            <strong><span> Vistoria</span></strong>
-                            <div class="form-check">
-                                <input class="form-check-input" value="true" type="radio">
-                                <label class="form-check-label">SIM</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" value="false" type="radio">
-                                <label class="form-check-label">NÃO</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Justifique </label>
-                            <input class="form-control" type="text" />
-                        </div>
-                    </div>
-
-                    <div *ngIf="action == 'F'">
-                        <div class="col-md-6">
-                            <strong>
-                            <span> Fiscal</span>
-                        </strong>
-                            <div class="form-check">
-                                <input class="form-check-input" value="true" type="radio">
-                                <label class="form-check-label">SIM</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" value="false" type="radio">
-                                <label class="form-check-label">NÃO</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Justifique </label>
-                            <input class="form-control" type="text" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br><br>
+  <hr>
+  <form *ngIf="form" [formGroup]="form">
+    <div class="row">
+      <div class="card mb-2 col-12" *ngFor="let panel of panelArray">
+        <div class="bg-secondary p-2">
+          <strong class="card-title">{{panel | uppercase}}</strong>
         </div>
-    </form>
+        <div class="card-body">
+          <div class="row">
+            <div *ngFor="let quest of questions">
+              <div *ngIf="quest.panelGroup == panel" class="col-12">
+                <label [for]="quest.name"><strong>{{quest.name.toUpperCase()}}</strong> </label><span
+                  *ngIf="quest.required" class="text-danger"> *</span>
+                <div [ngSwitch]="quest.type.key"
+                  [ngClass]="(f.get(quest.name).touched && !f.get(quest.name).valid) ? 'danger': ''">
+
+
+                  <div *ngSwitchCase="'select'">
+                    <!-- <div *ngIf="!getMultipleProperty(quest); else checkboxes"> -->
+                    <ng-container
+                      *ngIf="!(quest | filterQuestionOptions: 'multiple')[0]?.value || false; else checkboxes">
+                      <div *ngIf="quest.type.options.length < 5; else dropdown">
+                        <div class="form-check" *ngFor="let o of quest | filterQuestionOptions: 'option'">
+                          <input class="form-check-input" (change)="emitChange(quest)" type="radio" [name]="quest.name"
+                            [formControlName]="quest.name" [value]="o.descricao"
+                            [id]="'radioBtnOptions_' + quest.name + '_' + o.descricao">
+                          <label class="form-check-label" [for]="'radioBtnOptions_' + quest.name + '_' + o.descricao">
+                            {{o.descricao}}
+                          </label>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <ng-template #dropdown>
+                      <select class="form-control" [id]="quest.name" [formControlName]="quest.name"  (change)="emitChange(quest)">
+                        <!-- <option selected> -- Selecione --</option> -->
+                        <option *ngFor="let o of quest | filterQuestionOptions: 'option'" [value]="o.descricao">
+                          {{o.descricao}}</option>
+                      </select>
+                    </ng-template>
+
+                    <ng-template #checkboxes>
+                      <div class="form-check" *ngFor="let o of quest | filterQuestionOptions: 'option'">
+                        <div>
+                          <input #checkQuest class="form-check-input" [disabled]="action != 'R'"
+                            [checked]="form.get(quest.name).value.indexOf(o.descricao) > -1"
+                            (change)="getSelectedOptions($event, quest, checkQuest);emitChange(quest)" type="checkbox"
+                            [id]="'chkBox_' + quest.name + '_' + o.descricao">
+                          <label class="form-check-label" [for]="'chkBox_' + quest.name + '_' + o.descricao">
+                            {{o.descricao}}
+                          </label>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+
+                  <div *ngSwitchCase="'number'">
+                    <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''"
+                      class="form-control" [id]="quest.name" [formControlName]="quest.name" (change)="emitChange(quest)"
+                      [step]="(getFloat(quest)) ? (getMask(quest) && getMask(quest).descricao == 'isCoin') ? 0.01 : 0.1 : 1"
+                      type="number" [max]="(quest | filterQuestionOptions: 'max')[0]?.value.toString()  || null"
+                      [min]="(quest | filterQuestionOptions: 'min')[0]?.value.toString() || null" />
+
+                  </div>
+
+                  <div *ngSwitchCase="'text'">
+                    <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''"
+                      (change)="emitChange(quest)" [id]="quest.name"
+                      *ngIf="!(quest | filterQuestionOptions: 'textarea').length;else textArea"
+                      [formControlName]="quest.name" class="form-control " type="text"
+                      [placeholder]="(quest | filterQuestionOptions: 'mask')[0]?.value || ''"
+                      [mask]="(quest | filterQuestionOptions: 'mask')[0]?.value.toString() || null"
+                      [ngStyle]="!(quest | filterQuestionOptions: 'mask')[0] ? {'text-transform': 'capitalize'} : {'text-transform': null}">
+                    <ng-template #textArea>
+                      <textarea [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''"
+                        name="" id="" style="resize: none;" cols="30" rows="5" [formControlName]="quest.name"
+                        class="form-control " type="text" (change)="emitChange(quest)"
+                        [placeholder]="(quest | filterQuestionOptions: 'mask')[0]?.value.toString() || ''"></textarea>
+                    </ng-template>
+                  </div>
+                  <div *ngSwitchCase="'tel'">
+                    <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''"
+                      (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control"
+                      type="text" [required]="quest.required" [placeholder]="'(00) 0 0000-0000'"
+                      [mask]="'(00) 0 0000-0000'" />
+                  </div>
+                  <div *ngSwitchCase="'email'">
+                    <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''"
+                      (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control"
+                      type="email" placeholder="your@email.com" [pattern]="emailRegex" [required]="quest.required" />
+                  </div>
+                  <div *ngSwitchCase="'file'">
+                    <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''"
+                      (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name"
+                      class="form-input-control" type="file" (change)="changeFile($event, quest)"
+                      [accept]="(quest | filterQuestionOptions: 'accept')[0]?.value.toString() || ''" [multiple]="(quest | filterQuestionOptions: 'multiple')[0]?.value.toString() || false"
+                      [required]="quest.required" />
+                  </div>
+                  <div *ngSwitchCase="'date'">
+                    <input [ngClass]="f.get(quest.name).touched && !f.get(quest.name).valid ? 'border-danger' : ''"
+                      (change)="emitChange(quest)" [id]="quest.name" [formControlName]="quest.name" class="form-control"
+                      type="date" [required]="quest.required " />
+                  </div>
+                  <!-- <span class="text-danger text-sm" *ngIf="f.get(quest.name).touched && !f.get(quest.name).valid ">Esse campo não está valido.</span> -->
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+    </div>
+  </form>

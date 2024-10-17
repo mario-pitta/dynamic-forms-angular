@@ -6,63 +6,66 @@ import { Formulario } from 'src/app/core/Models/Formulario';
 import { Questao } from 'src/app/core/Models/Questao';
 import { QuestionService } from 'src/app/services/questions/question.service';
 import { FormulariosService } from 'src/app/services/formularios/formularios.service';
-import Swal, { SweetAlertResult } from 'sweetalert2'
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-formulario-form',
   templateUrl: './formulario-form.component.html',
-  styleUrls: ['./formulario-form.component.scss']
+  styleUrls: ['./formulario-form.component.scss'],
 })
 export class FormularioFormComponent implements OnInit {
-  form: FormGroup
-  formulario: Formulario
-  questions: Questao[] = []
+  form: FormGroup;
+  formulario: Formulario;
+  questions: Questao[] | any[] = [];
   resposta: Subject<any> = new Subject();
-  @ViewChildren('checkShowQuestion') checkShowQuestion: QueryList<any>
-  @ViewChildren('checkRequiredQuestion') checkRequiredQuestion: QueryList<any>
-  @ViewChildren('checkFiscalizacaoQuestion') checkFiscalizacaoQuestion: QueryList<any>
-  @ViewChildren('checkVistoriaQuestion') checkVistoriaQuestion: QueryList<any>
-  @ViewChildren('checkAnaliseQuestion') checkAnaliseQuestion: QueryList<any>
-  @ViewChildren('checkRequerimentoQuestion') checkRequerimentoQuestion: QueryList<any>
-  constructor(public modal: BsModalRef, private fb: FormBuilder, private questionsService: QuestionService, private formService: FormulariosService) { }
+  @ViewChildren('checkShowQuestion') checkShowQuestion: QueryList<any>;
+  @ViewChildren('checkRequiredQuestion') checkRequiredQuestion: QueryList<any>;
+  @ViewChildren('checkFiscalizacaoQuestion')
+  checkFiscalizacaoQuestion: QueryList<any>;
+  @ViewChildren('checkVistoriaQuestion') checkVistoriaQuestion: QueryList<any>;
+  @ViewChildren('checkAnaliseQuestion') checkAnaliseQuestion: QueryList<any>;
+  @ViewChildren('checkRequerimentoQuestion')
+  checkRequerimentoQuestion: QueryList<any>;
+  constructor(
+    public modal: BsModalRef,
+    private fb: FormBuilder,
+    private questionsService: QuestionService,
+    private formService: FormulariosService
+  ) {}
 
   ngOnInit() {
-    this.getQuestions()
+    this.getQuestions();
 
     this.form = this.fb.group({
       id: ['', [Validators.nullValidator]],
       descricao: ['', [Validators.required]],
       cidade: ['', [Validators.required]],
-      questions: [[], [Validators.required]]
-    })
-
-
+      questions: [[], [Validators.required]],
+    });
   }
-
 
   getQuestions() {
     this.questionsService.getQuestions().subscribe((data: any[]) => {
-      this.questions = data
+      this.questions = data;
 
       if (this.questions.length > 0) {
         if (this.f.value.questions.length > 0) {
-          this.questions.forEach(q => {
-            q.show = false
+          this.questions.forEach((q) => {
+            q.show = false;
             q.fiscalizacao = {
-              show: false
-            }
+              show: false,
+            };
             q.analise = {
-              show: false
-            }
+              show: false,
+            };
             q.vistoria = {
-              show: false
-            }
-          })
-          this.completeQuestions()
+              show: false,
+            };
+          });
+          this.completeQuestions();
         }
       }
-    })
-
+    });
   }
 
   ngAfterViewInit() {
@@ -72,164 +75,166 @@ export class FormularioFormComponent implements OnInit {
         descricao: this.formulario.descricao,
         cidade: this.formulario.cidade,
         questions: this.formulario.questions,
-      })
-
+      });
 
       // console.log(this.f.value)
     }
   }
 
   checkQuestions() {
-    let questions: { id: number, required: true }[] = []
-    this.checkShowQuestion.toArray().forEach(cQ => {
+    let questions: { id: number; required: true }[] = [];
+    this.checkShowQuestion.toArray().forEach((cQ) => {
       if (cQ.nativeElement.checked) {
-        let requireCheck = this.checkRequiredQuestion.toArray()[this.checkShowQuestion.toArray().indexOf(cQ)]
-        questions.push({ id: Number(cQ.nativeElement.id.split('_')[1]), required: requireCheck.nativeElement.checked })
+        let requireCheck =
+          this.checkRequiredQuestion.toArray()[
+            this.checkShowQuestion.toArray().indexOf(cQ)
+          ];
+        questions.push({
+          id: Number(cQ.nativeElement.id.split('_')[1]),
+          required: requireCheck.nativeElement.checked,
+        });
       }
-    })
+    });
 
     this.form.patchValue({
-      questions: questions
-    })
+      questions: questions,
+    });
 
-    this.getSelectedChecks()
-
+    this.getSelectedChecks();
   }
 
   getSelectedChecks() {
-    let questions:
-      {
-        id: number,
-        required: boolean,
-        fiscalizacao: {
-          show: boolean
-        },
-        analise: {
-          show: boolean
-        },
-        vistoria: {
-          show: boolean
-        },
+    let questions: {
+      id: number;
+      required: boolean;
+      fiscalizacao: {
+        show: boolean;
+      };
+      analise: {
+        show: boolean;
+      };
+      vistoria: {
+        show: boolean;
+      };
+      show: boolean;
+    }[] = [];
 
-        show: boolean
-
-      }[] = []
-
-    this.questions.forEach(q => {
-      let i = 0
+    this.questions.forEach((q) => {
       let obj = {
         id: q.id,
         required: q.required,
-
-        show: q.show,
+        show: q.show || true,
         fiscalizacao: {
-          show: q.fiscalizacao.show
+          show: q.fiscalizacao?.show || true,
         },
         analise: {
-          show: q.analise.show
+          show: q.analise?.show || true,
         },
         vistoria: {
-          show: q.vistoria.show
+          show: q.vistoria?.show || true,
         },
-      }
-      if (obj.analise.show || obj.fiscalizacao.show || obj.vistoria.show || obj.show) {
-        questions.push(obj)
-      }
-      i++
-    })
+      };
+      if (
+        obj.analise?.show ||
+        obj.fiscalizacao?.show ||
+        obj.vistoria?.show ||
+        obj?.show
+      )
+        q = {
+          ...q,
+          ...obj,
+        };
+      questions.push(q);
+    });
 
-    // console.log(questions)
-    this.form.patchValue({ questions: questions })
-    //metodo para percorrer os checkboxes 
-
-
+    // this.questions = questions
+    this.form.patchValue({ questions: questions });
   }
 
   completeQuestions() {
     this.f.value.questions.forEach((fQ: any) => {
       this.questions.forEach((q: Questao) => {
-        q.show = fQ.show
+        q.show = fQ.show;
         q.fiscalizacao = {
-          show: fQ.fiscalizacao.show
-        }
+          show: fQ.fiscalizacao.show,
+        };
         q.analise = {
-          show: fQ.analise.show
-        }
+          show: fQ.analise.show,
+        };
         q.vistoria = {
-          show: fQ.vistoria.show
-        }
+          show: fQ.vistoria.show,
+        };
         // console.log(q)
-        this.log(q)
+        this.log(q);
         if (q.id == fQ.id) {
-          q.show = true
-          q.show = fQ.show
+          q.show = true;
+          q.show = fQ.show;
           q.fiscalizacao = {
-            show: fQ.fiscalizacao.show
-          }
+            show: fQ.fiscalizacao.show,
+          };
           q.analise = {
-            show: fQ.analise.show
-          }
+            show: fQ.analise.show,
+          };
           q.vistoria = {
-            show: fQ.vistoria.show
-          }
+            show: fQ.vistoria.show,
+          };
           if (fQ.required) {
-            q.required = true
+            q.required = true;
           }
         }
-      })
-    })
+      });
+    });
   }
-
 
   log(value: any) {
     // console.log(value)
   }
 
   confirm() {
-
-
     if (this.formulario) {
-      this.update()
+      this.update();
     } else {
-      this.create()
+      this.create();
     }
   }
 
-
   create() {
-    this.formService.createForm(this.f.value).subscribe((data: any) => {
-      this.close(true)
-      this.showSuccess()
-    }, err => {
-      this.showError()
-    })
+    this.formService.createForm(this.f.value).subscribe(
+      (data: any) => {
+        this.close(true);
+        this.showSuccess();
+      },
+      (err) => {
+        this.showError();
+      }
+    );
   }
-
 
   update() {
-    this.formService.updateForm(this.f.value).subscribe((data: any) => {
-      this.close(true)
-      this.showSuccess()
-    }, err => {
-      this.showError()
-    })
-
+    this.formService.updateForm(this.f.value).subscribe(
+      (data: any) => {
+        this.close(true);
+        this.showSuccess();
+      },
+      (err) => {
+        this.showError();
+      }
+    );
   }
-
 
   showSuccess() {
     Swal.fire({
       icon: 'success',
       text: 'Deu tudo certo!!',
-      timer: 2500
-    })
+      timer: 2500,
+    });
   }
 
   showError() {
     Swal.fire({
       icon: 'error',
       text: 'Algo deu errado tudo certo!!',
-    })
+    });
   }
 
   showConfirm() {
@@ -240,22 +245,18 @@ export class FormularioFormComponent implements OnInit {
       showConfirmButton: true,
       confirmButtonText: 'Sim',
       showCancelButton: true,
-      cancelButtonText: 'Não'
+      cancelButtonText: 'Não',
     }).then((res: SweetAlertResult) => {
-
-      return res
-
-    })
-
+      return res;
+    });
   }
-
 
   close(value: any) {
     this.resposta.next(value);
-    this.modal.hide()
+    this.modal.hide();
   }
 
   public get f() {
-    return this.form
+    return this.form;
   }
 }

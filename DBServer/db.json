@@ -60,7 +60,7 @@
           },
           {
             "property": "multiple",
-            "value": false,
+            "value": true,
             "descricao": "Multiplas escolhas"
           }
         ]
@@ -253,6 +253,11 @@
             "value": "NÃO",
             "property": "option",
             "descricao": ""
+          },
+          {
+            "property": "multiple",
+            "value": false,
+            "descricao": "Multiplas escolhas"
           }
         ]
       }
@@ -407,6 +412,50 @@
             "property": "textarea",
             "value": "true",
             "descricao": "textarea"
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "name": "teste nova questao",
+      "required": false,
+      "panelGroup": "empresa",
+      "detalhamento": null,
+      "type": {
+        "key": "file",
+        "options": [
+          {
+            "property": "accept",
+            "value": ".pdf, .doc, .docx",
+            "descricao": "Documento"
+          },
+          {
+            "property": "accept",
+            "value": ".csv, .csvx, .xls, .xlsx, .odf",
+            "descricao": "Planilha"
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "name": "Numero com minimo e maximo",
+      "required": false,
+      "panelGroup": "empresa",
+      "detalhamento": "min 1 e max 50",
+      "type": {
+        "key": "number",
+        "options": [
+          {
+            "property": "max",
+            "value": "50",
+            "descricao": "max"
+          },
+          {
+            "property": "min",
+            "value": "1",
+            "descricao": "min"
           }
         ]
       }
@@ -654,6 +703,941 @@
           },
           "vistoria": {
             "show": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "descricao": "dasdaadsd",
+      "cidade": "pojuca",
+      "questions": [
+        {
+          "id": 1,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 2,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 3,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 4,
+          "required": false,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 5,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 6,
+          "required": false,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 7,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 8,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 9,
+          "required": false,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 10,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 11,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 12,
+          "required": false,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 13,
+          "required": false,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 14,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 15,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 16,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 17,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 18,
+          "required": true,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 19,
+          "required": false,
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "descricao": "teste novo formul",
+      "cidade": "salvador",
+      "questions": [
+        {
+          "id": 1,
+          "name": "CPF",
+          "required": true,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "text",
+            "options": [
+              {
+                "property": "mask",
+                "value": "000.000.000-00",
+                "descricao": "CPF"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 2,
+          "name": "RG",
+          "required": true,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "text",
+            "options": [
+              {
+                "property": "mask",
+                "value": "00.000.000-00",
+                "descricao": "RG"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 3,
+          "name": "Multipla Escolha",
+          "required": false,
+          "panelGroup": "empresa",
+          "detalhamento": null,
+          "type": {
+            "key": "select",
+            "options": [
+              {
+                "value": "Jhonatan",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "Gabriel",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "Willian",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "property": "multiple",
+                "value": true,
+                "descricao": "Multiplas escolhas"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 4,
+          "name": "Arquivo",
+          "required": true,
+          "panelGroup": "archive",
+          "detalhamento": null,
+          "type": {
+            "key": "file",
+            "options": [
+              {
+                "property": "accept",
+                "value": ".pdf, .doc, .docx",
+                "descricao": "Documento"
+              },
+              {
+                "property": "accept",
+                "value": ".csv, .csvx, .xls, .xlsx, .odf",
+                "descricao": "Planilha"
+              },
+              {
+                "property": "accept",
+                "value": ".png, .jpeg, .jpg",
+                "descricao": "Imagem"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 5,
+          "name": "CNPJ",
+          "required": true,
+          "panelGroup": "empresa",
+          "detalhamento": null,
+          "type": {
+            "key": "text",
+            "options": [
+              {
+                "property": "mask",
+                "value": "00.000.000/0000-00",
+                "descricao": "CNPJ"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 6,
+          "name": "Telefone",
+          "required": false,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "tel",
+            "options": null
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 7,
+          "name": "Email",
+          "required": true,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "email",
+            "options": null
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 8,
+          "name": "Numero",
+          "required": true,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "number",
+            "options": [
+              {
+                "property": "max",
+                "value": "0",
+                "descricao": "max"
+              },
+              {
+                "property": "min",
+                "value": "150",
+                "descricao": "min"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 9,
+          "name": "Moeda",
+          "required": false,
+          "panelGroup": "empresa",
+          "detalhamento": null,
+          "type": {
+            "key": "number",
+            "options": [
+              {
+                "property": "float",
+                "value": true,
+                "descricao": "float"
+              },
+              {
+                "property": "mask",
+                "value": "",
+                "descricao": "isCoin"
+              },
+              {
+                "property": "max",
+                "value": "150000",
+                "descricao": "max"
+              },
+              {
+                "property": "min",
+                "value": "350",
+                "descricao": "min"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 10,
+          "name": "Area desmatada",
+          "required": true,
+          "panelGroup": "archive",
+          "detalhamento": null,
+          "type": {
+            "key": "number",
+            "options": [
+              {
+                "property": "float",
+                "value": true,
+                "descricao": "float"
+              },
+              {
+                "property": "mask",
+                "value": "",
+                "descricao": "isCoin"
+              },
+              {
+                "property": "min",
+                "value": "0",
+                "descricao": "min"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 11,
+          "name": "Data",
+          "required": true,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "date",
+            "options": []
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 12,
+          "name": "Nome Completo",
+          "required": false,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "text",
+            "options": []
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 13,
+          "name": "SIM / NÃO",
+          "required": false,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "select",
+            "options": [
+              {
+                "value": "SIM",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "NÃO",
+                "property": "option",
+                "descricao": ""
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 14,
+          "name": "Frase/Texto",
+          "required": true,
+          "panelGroup": "archive",
+          "detalhamento": null,
+          "type": {
+            "key": "text",
+            "options": [
+              {
+                "property": "textarea",
+                "value": "true",
+                "descricao": "textarea"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 15,
+          "name": "MUITAS OPÇÕES",
+          "required": true,
+          "panelGroup": "users",
+          "detalhamento": null,
+          "type": {
+            "key": "select",
+            "options": [
+              {
+                "value": "Opção 1",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "Opção 2",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "Opção 3",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "Opção 4",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "Opção 5",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "Opção 6",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "property": "multiple",
+                "value": true,
+                "descricao": "Multiplas escolhas"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 16,
+          "name": "Select",
+          "required": true,
+          "panelGroup": "endereco",
+          "detalhamento": null,
+          "type": {
+            "key": "select",
+            "options": [
+              {
+                "value": "1",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "2",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "3",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "4",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "5",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "6",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "7",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "8",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "9",
+                "property": "option",
+                "descricao": ""
+              },
+              {
+                "value": "10",
+                "property": "option",
+                "descricao": ""
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 17,
+          "name": "Area de Doação",
+          "required": true,
+          "panelGroup": "archive",
+          "detalhamento": null,
+          "type": {
+            "key": "number",
+            "options": []
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 18,
+          "name": "Bolo",
+          "required": true,
+          "panelGroup": "archive",
+          "detalhamento": "xxxxxxxxxx",
+          "type": {
+            "key": "text",
+            "options": [
+              {
+                "property": "textarea",
+                "value": "true",
+                "descricao": "textarea"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 19,
+          "name": "teste nova questao",
+          "required": false,
+          "panelGroup": "empresa",
+          "detalhamento": null,
+          "type": {
+            "key": "file",
+            "options": [
+              {
+                "property": "accept",
+                "value": ".pdf, .doc, .docx",
+                "descricao": "Documento"
+              },
+              {
+                "property": "accept",
+                "value": ".csv, .csvx, .xls, .xlsx, .odf",
+                "descricao": "Planilha"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
+          }
+        },
+        {
+          "id": 20,
+          "name": "Numero com minimo e maximo",
+          "required": false,
+          "panelGroup": "empresa",
+          "detalhamento": "min 1 e max 50",
+          "type": {
+            "key": "number",
+            "options": [
+              {
+                "property": "max",
+                "value": "50",
+                "descricao": "max"
+              },
+              {
+                "property": "min",
+                "value": "1",
+                "descricao": "min"
+              }
+            ]
+          },
+          "show": true,
+          "fiscalizacao": {
+            "show": true
+          },
+          "analise": {
+            "show": true
+          },
+          "vistoria": {
+            "show": true
           }
         }
       ]

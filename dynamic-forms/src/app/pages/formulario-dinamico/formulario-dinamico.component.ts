@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, SimpleChanges } from '@angular/core';
 import { Component, EventEmitter, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormArray, FormArrayName, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -54,7 +54,9 @@ export class FormularioDinamicoComponent implements OnInit {
   }
 
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges: ', changes);
+
     this.disableFormControls(this.action)
   }
 
@@ -196,7 +198,7 @@ export class FormularioDinamicoComponent implements OnInit {
 
           quest.formOptions = optArr
 
-          //Acrescentar validadores conforme as opções das questões          
+          //Acrescentar validadores conforme as opções das questões
           var validators: any[] = []
           if (quest.required) { validators.push(Validators.required) }
           if (quest.type.key == 'email') { validators.push(Validators.email) }
